@@ -1,18 +1,18 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Home from './pages/Home1'
-import Dashboard from './pages/Dashboard'
-import About from './pages/AboutUs'
-import Contract from './pages/Contract'
-import SignIn from './pages/SignIn'
-import GetStarted from './pages/GetStarted'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home1';
+import Dashboard from './pages/Dashboard';
+import About from './pages/AboutUs';
+import Contract from './pages/Contract';
+import SignIn from './pages/SignIn';
+import GetStarted from './pages/GetStarted';
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        <main>
+        <main className="pt-20"> {/* Add padding to avoid overlap with fixed navbar */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
@@ -24,7 +24,7 @@ function App() {
         </main>
       </div>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
