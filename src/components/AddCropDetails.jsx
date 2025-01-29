@@ -114,6 +114,7 @@ export default function AddCropDetails() {
               </div>
             </div>
           </div>
+          
 
           <div className="space-y-2">
             <label className="text-sm font-semibold text-gray-600 block">Additional Notes</label>
