@@ -105,6 +105,27 @@ export default function Analytics() {
                   </LineChart>
                 </ResponsiveContainer>
               </div>
+              <div className="mt-6">
+                <h4 className="text-md font-medium text-green-800">Breakdown by Crop Type:</h4>
+                <ul className="list-disc list-inside text-green-700">
+                  <li className="flex justify-between">
+                    <span>Wheat:</span>
+                    <span>$15,000</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Corn:</span>
+                    <span>$10,000</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Soybeans:</span>
+                    <span>$8,000</span>
+                  </li>
+                  <li className="flex justify-between">
+                    <span>Cotton:</span>
+                    <span>$12,231.89</span>
+                  </li>
+                </ul>
+              </div>
             </Card>
           )}
 
@@ -122,6 +143,13 @@ export default function Analytics() {
                     <Bar dataKey="value" fill="#059669" />
                   </BarChart>
                 </ResponsiveContainer>
+              </div>
+              <div className="mt-6">
+                <h4 className="text-md font-medium text-green-800">Market Insights:</h4>
+                <ul className="list-disc list-inside text-green-700">
+                  <li>Seasonal demand analysis</li>
+                  <li>Best selling crops in different regions</li>
+                </ul>
               </div>
             </Card>
           )}
@@ -141,6 +169,15 @@ export default function Analytics() {
                     <Line type="monotone" dataKey="expenses" stroke="#dc2626" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>
+              </div>
+              <div className="mt-6">
+                <h4 className="text-md font-medium text-green-800">Expense Tracking:</h4>
+                <ul className="list-disc list-inside text-green-700">
+                  <li>Input costs vs. revenue comparison</li>
+                  <li>Labor costs</li>
+                  <li>Equipment maintenance</li>
+                  <li>Other operational expenses</li>
+                </ul>
               </div>
             </Card>
           )}
