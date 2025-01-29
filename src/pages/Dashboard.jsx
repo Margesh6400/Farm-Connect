@@ -35,7 +35,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex pt-8">
+    <div className="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex">
       {/* Sidebar */}
       <div className="w-72 bg-gradient-to-b from-green-800 to-green-900 p-6 text-white shadow-xl mt-8">
         <div className="mb-8">
