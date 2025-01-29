@@ -348,7 +348,7 @@ const UserRegistration = () => {
           <h1 className="text-3xl font-bold">
             <span className="text-green-600">Farm</span>Connect
           </h1>
-          <a href="/login" className="text-green-600 text-sm hover:text-green-700 font-medium">
+          <a href="/signin" className="text-green-600 text-sm hover:text-green-700 font-medium">
             Already have an account? Sign in
           </a>
         </div>
