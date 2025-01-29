@@ -1,135 +1,183 @@
-import { useRef } from 'react'
-import { CheckCircleIcon, ArrowPathIcon, UserGroupIcon, DocumentCheckIcon } from '@heroicons/react/24/solid'
+import { useRef, useState, useEffect } from 'react';
 
 export default function Home() {
-  const aboutRef = useRef(null)
+  const aboutRef = useRef(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [statCount, setStatCount] = useState({ farmers: 0, buyers: 0, products: 0 });
+  const [showModal, setShowModal] = useState(false);
+  const [selectedFeature, setSelectedFeature] = useState(null);
+
+  // Handle scroll effects
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+      
+      // Animate stats when in view
+      const statsSection = document.getElementById('stats-section');
+      if (statsSection) {
+        const rect = statsSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom >= 0) {
+          setStatCount({
+            farmers: 5000,
+            buyers: 2000,
+            products: 150
+          });
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Auto-rotate testimonials
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveTestimonial((prev) => (prev + 1) % 3);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const features = [
+    {
+      title: 'Secure Contracts',
+      desc: 'Get guaranteed prices before planting season starts with our blockchain-based smart contracts.',
+      image: 'https://images.unsplash.com/photo-1593113598332-cd288d649433?w=800'
+    },
+    {
+      title: 'Market Access',
+      desc: 'Connect directly with verified buyers through our extensive marketplace network.',
+      image: 'https://images.unsplash.com/photo-1595665593673-bf1ad72905c0?w=800'
+    },
+    {
+      title: 'Expert Support',
+      desc: 'Access agricultural expertise and guidance from certified professionals.',
+      image: 'https://images.unsplash.com/photo-1605000797499-95a51c5269ae?w=800'
+    }
+  ];
 
   return (
-    <div className="bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-white to-green-50">
+
       {/* Hero Section */}
-      <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-8 items-center py-32 sm:py-48">
-            <div className="text-left">
-              <h1 className="text-4xl font-bold tracking-tight text-green-900 sm:text-6xl">
-                Connecting Farmers with Market Opportunities
+      <div className="relative min-h-screen flex items-center">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920')] bg-cover bg-center opacity-20" />
+        <div className="relative max-w-7xl mx-auto px-6 py-32">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="space-y-8">
+              <h1 className="text-5xl md:text-7xl font-bold text-green-900 leading-tight animate-fade-in">
+                Growing Future,
+                <br />
+                <span className="text-green-600">Together</span>
               </h1>
-              <p className="mt-6 text-lg leading-8 text-green-600">
-                Join our platform to access stable farming contracts, reliable buyers, and a supportive agricultural community.
+              <p className="text-xl text-green-700 max-w-lg animate-slide-up">
+                Join our revolutionary platform connecting farmers with market opportunities for a sustainable agricultural future.
               </p>
-              <div className="mt-10 flex items-center gap-x-6">
-                <a
-                  href="/signup"
-                  className="rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
-                >
-                  Get started
-                </a>
+              <div className="flex gap-6 animate-slide-up">
                 <button 
-                  onClick={() => aboutRef.current?.scrollIntoView({ behavior: 'smooth' })}
-                  className="text-sm font-semibold leading-6 text-green-900"
-                >
-                  Learn more <span aria-hidden="true">→</span>
+                  onClick={() => setShowModal(true)}
+                  className="px-8 py-4 bg-green-600 text-white rounded-full hover:bg-green-500 transform hover:scale-105 transition-all">
+                  Get Started
+                </button>
+                <button className="px-8 py-4 border-2 border-green-600 text-green-600 rounded-full hover:bg-green-50 transform hover:scale-105 transition-all">
+                  Learn More
                 </button>
               </div>
             </div>
+            <div className="relative hidden lg:block">
+              <div className="aspect-square rounded-full bg-green-100 animate-float">
+                <img
+                  src="https://images.pexels.com/photos/2382904/pexels-photo-2382904.jpeg"
+                  alt="Farming"
+                  className="absolute inset-0 object-cover rounded-3xl transform -rotate-6 hover:rotate-0 transition-transform duration-500"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Stats Section */}
+      <div id="stats-section" className="py-16 bg-green-600">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-8 text-white text-center">
+            <div>
+              <div className="text-4xl font-bold mb-2">{statCount.farmers.toLocaleString()}+</div>
+              <div>Active Farmers</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold mb-2">{statCount.buyers.toLocaleString()}+</div>
+              <div>Verified Buyers</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold mb-2">{statCount.products.toLocaleString()}+</div>
+              <div>Agricultural Products</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Features Grid */}
+      <div className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, i) => (
+              <div 
+                key={i}
+                onClick={() => setSelectedFeature(feature)}
+                className="group cursor-pointer overflow-hidden rounded-2xl bg-green-50 hover:bg-green-100 transition-all duration-300 transform hover:-translate-y-2"
+              >
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-green-800 mb-2">{feature.title}</h3>
+                  <p className="text-green-600">{feature.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* About Section with Video */}
+      <div ref={aboutRef} className="py-24 bg-gradient-to-b from-green-50 to-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
-              <img
-                src="https://images.pexels.com/photos/2933243/pexels-photo-2933243.jpeg"
-                alt="Farmer in field"
-                className="rounded-lg shadow-xl object-cover h-[400px] w-full"
-              />
+              <div className="aspect-video rounded-2xl overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800"
+                  alt="About Us"
+                  className="object-cover w-full h-full transform hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <button 
+                    onClick={() => setShowModal(true)}
+                    className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-lg transform hover:scale-110 transition-all"
+                  >
+                    <div className="w-0 h-0 border-t-8 border-b-8 border-l-12 border-transparent border-l-green-600 ml-1" />
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* About Section */}
-      <div ref={aboutRef} className="bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <img
-                src="https://images.pexels.com/photos/2886937/pexels-photo-2886937.jpeg"
-                alt="Sustainable farming"
-                className="rounded-lg shadow-xl object-cover h-[400px] w-full"
-              />
-            </div>
-            <div>
-              <h2 className="text-base font-semibold leading-7 text-green-600">About Us</h2>
-              <p className="mt-2 text-3xl font-bold tracking-tight text-green-900 sm:text-4xl">
-                Empowering Agricultural Communities
+            <div className="space-y-8">
+              <h2 className="text-4xl font-bold text-green-900">Our Mission</h2>
+              <p className="text-lg text-green-700">
+                We're revolutionizing agricultural commerce by creating direct connections between farmers and buyers, ensuring fair prices and sustainable practices.
               </p>
-              <p className="mt-6 text-lg leading-8 text-green-600">
-                Our mission is to create a sustainable and profitable farming ecosystem by connecting farmers directly with buyers,
-                ensuring fair prices and stable income through secure contract farming arrangements.
-              </p>
-              <dl className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
-                <div>
-                  <dt className="font-semibold text-green-900">Our Mission</dt>
-                  <dd className="mt-2 text-green-600">To revolutionize agricultural marketing by providing a transparent and efficient platform.</dd>
+              <div className="grid sm:grid-cols-2 gap-8">
+                <div className="p-6 bg-green-50 rounded-xl hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold text-green-800 mb-2">For Farmers</h3>
+                  <p className="text-green-600">Access stable contracts and fair prices</p>
                 </div>
-                <div>
-                  <dt className="font-semibold text-green-900">Our Vision</dt>
-                  <dd className="mt-2 text-green-600">A world where every farmer has access to fair market opportunities.</dd>
-                </div>
-                <div>
-                  <dt className="font-semibold text-green-900">Our Values</dt>
-                  <dd className="mt-2 text-green-600">Transparency, fairness, sustainability, and community empowerment.</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* How to Work With Us Section */}
-      <div className="bg-green-50 py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-green-600">How to Work With Us</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-green-900 sm:text-4xl">
-              Simple Steps to Get Started
-            </p>
-            <p className="mt-6 text-lg leading-8 text-green-600">
-              Join our platform in just a few easy steps and start growing your agricultural business.
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-4">
-              <div className="relative pl-16">
-                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-                  <span className="text-xl font-bold text-white">1</span>
-                </div>
-                <div className="text-xl font-semibold leading-7 text-green-900">Sign Up</div>
-                <div className="mt-2 text-base leading-7 text-green-600">
-                  Create your account as a farmer or buyer
-                </div>
-              </div>
-              <div className="relative pl-16">
-                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-                  <span className="text-xl font-bold text-white">2</span>
-                </div>
-                <div className="text-xl font-semibold leading-7 text-green-900">Complete Profile</div>
-                <div className="mt-2 text-base leading-7 text-green-600">
-                  Add your details and verify your account
-                </div>
-              </div>
-              <div className="relative pl-16">
-                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-                  <span className="text-xl font-bold text-white">3</span>
-                </div>
-                <div className="text-xl font-semibold leading-7 text-green-900">Connect</div>
-                <div className="mt-2 text-base leading-7 text-green-600">
-                  Browse and connect with potential partners
-                </div>
-              </div>
-              <div className="relative pl-16">
-                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-green-600">
-                  <span className="text-xl font-bold text-white">4</span>
-                </div>
-                <div className="text-xl font-semibold leading-7 text-green-900">Start Trading</div>
-                <div className="mt-2 text-base leading-7 text-green-600">
-                  Begin secure contract farming arrangements
+                <div className="p-6 bg-green-50 rounded-xl hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold text-green-800 mb-2">For Buyers</h3>
+                  <p className="text-green-600">Source quality produce directly</p>
                 </div>
               </div>
             </div>
@@ -137,207 +185,235 @@ export default function Home() {
         </div>
       </div>
 
-      {/* For Farmers Section */}
-      <div className="bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-green-600">For Farmers</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-green-900 sm:text-4xl">
-              Grow Your Farm Business
-            </p>
-            <p className="mt-6 text-lg leading-8 text-green-600">
-              Join thousands of farmers who have transformed their agricultural business through our platform.
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-green-900">
-                  <DocumentCheckIcon className="h-5 w-5 text-green-600" />
-                  Secure Contracts
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-green-600">
-                  <p className="flex-auto">Get guaranteed prices and secure contracts before planting season begins.</p>
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-green-900">
-                  <ArrowPathIcon className="h-5 w-5 text-green-600" />
-                  Market Access
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-green-600">
-                  <p className="flex-auto">Connect directly with buyers and access new market opportunities.</p>
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-green-900">
-                  <UserGroupIcon className="h-5 w-5 text-green-600" />
-                  Technical Support
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-green-600">
-                  <p className="flex-auto">Get expert advice and support to improve your farming practices.</p>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </div>
-
-      {/* For Buyers Section */}
-      <div className="bg-green-50 py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-green-600">For Buyers</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-green-900 sm:text-4xl">
-              Source Quality Produce Directly
-            </p>
-            <p className="mt-6 text-lg leading-8 text-green-600">
-              Connect with verified farmers and secure your supply chain with confidence.
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-green-900">
-                  <CheckCircleIcon className="h-5 w-5 text-green-600" />
-                  Quality Assurance
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-green-600">
-                  <p className="flex-auto">Source from verified farmers with quality tracking and certification.</p>
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-green-900">
-                  <ArrowPathIcon className="h-5 w-5 text-green-600" />
-                  Supply Chain Control
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-green-600">
-                  <p className="flex-auto">Manage your supply chain with real-time tracking and forecasting.</p>
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-green-900">
-                  <DocumentCheckIcon className="h-5 w-5 text-green-600" />
-                  Competitive Pricing
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-green-600">
-                  <p className="flex-auto">Get competitive prices by sourcing directly from farmers.</p>
-                </dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </div>
-
-      {/* Testimonials Section */}
-      <div className="bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-green-600">Testimonials</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-green-900 sm:text-4xl">
-              What Our Users Say
-            </p>
-          </div>
-          <div className="mt-16 space-y-16 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-x-8">
-            <div className="flex flex-col items-center text-center">
-              <img
-                className="h-24 w-24 rounded-full object-cover"
-                src="https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg"
-                alt="User 1"
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full mx-4">
+            <h2 className="text-2xl font-bold text-green-900 mb-4">Get Started</h2>
+            <div className="space-y-4">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                className="w-full px-4 py-2 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               />
-              <p className="mt-6 text-lg leading-8 text-green-600">
-                "FarmConnect has transformed my farming business. I now have access to reliable buyers and secure contracts."
-              </p>
-              <p className="mt-4 text-base font-semibold leading-7 text-green-900">John Doe</p>
+              <select className="w-full px-4 py-2 border border-green-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                <option value="">I am a...</option>
+                <option value="farmer">Farmer</option>
+                <option value="buyer">Buyer</option>
+              </select>
+              <button className="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition-colors">
+                Continue
+              </button>
             </div>
-            <div className="flex flex-col items-center text-center">
-              <img
-                className="h-24 w-24 rounded-full object-cover"
-                src="https://images.pexels.com/photos/1239292/pexels-photo-1239292.jpeg"
-                alt="User 2"
-              />
-              <p className="mt-6 text-lg leading-8 text-green-600">
-                "Thanks to FarmConnect, I can now source quality produce directly from farmers at competitive prices."
-              </p>
-              <p className="mt-4 text-base font-semibold leading-7 text-green-900">Jane Smith</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <img
-                className="h-24 w-24 rounded-full object-cover"
-                src="https://images.pexels.com/photos/1239293/pexels-photo-1239293.jpeg"
-                alt="User 3"
-              />
-              <p className="mt-6 text-lg leading-8 text-green-600">
-                "The technical support and expert advice from FarmConnect have been invaluable for improving my farming practices."
-              </p>
-              <p className="mt-4 text-base font-semibold leading-7 text-green-900">Michael Johnson</p>
-            </div>
+            <button 
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-green-600 hover:text-green-500"
+            >
+              ✕
+            </button>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* Call to Action Section */}
-      <div className="bg-green-600 py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-white">Ready to Get Started?</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Join FarmConnect Today
-            </p>
-            <p className="mt-6 text-lg leading-8 text-green-200">
-              Sign up now and start transforming your agricultural business with FarmConnect.
-            </p>
-            <div className="mt-10 flex justify-center gap-x-6">
-              <a
-                href="/signup"
-                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-green-600 shadow-sm hover:bg-green-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+      {/* Feature Detail Modal */}
+      {selectedFeature && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+          <div className="bg-white rounded-2xl overflow-hidden max-w-2xl w-full mx-4">
+            <img 
+              src={selectedFeature.image} 
+              alt={selectedFeature.title}
+              className="w-full h-64 object-cover"
+            />
+            <div className="p-8">
+              <h2 className="text-2xl font-bold text-green-900 mb-4">{selectedFeature.title}</h2>
+              <p className="text-green-700 mb-6">{selectedFeature.desc}</p>
+              <button 
+                onClick={() => setSelectedFeature(null)}
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 transition-colors"
               >
-                Get started
-              </a>
-              <a
-                href="/signin"
-                className="text-sm font-semibold leading-6 text-white"
-              >
-                Sign in <span aria-hidden="true">→</span>
-              </a>
+                Close
+              </button>
             </div>
           </div>
+        </div>
+      )}
+
+          {/* Features Grid */}
+          <div className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { title: 'Secure Contracts', desc: 'Get guaranteed prices before planting season' },
+              { title: 'Market Access', desc: 'Connect directly with verified buyers' },
+              { title: 'Expert Support', desc: 'Access agricultural expertise and guidance' },
+              { title: 'Quality Tracking', desc: 'Monitor and verify produce quality' },
+              { title: 'Fair Pricing', desc: 'Transparent and competitive market rates' },
+              { title: 'Community', desc: 'Join a network of agricultural professionals' }
+            ].map((feature, i) => (
+              <div key={i} className="group p-8 rounded-2xl bg-green-50 hover:bg-green-100 transition-all duration-300">
+                <h3 className="text-xl font-semibold text-green-800 mb-4">{feature.title}</h3>
+                <p className="text-green-600">{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* About Section with Animation */}
+      <div ref={aboutRef} className="py-24 bg-gradient-to-b from-green-50 to-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="relative">
+              <div className="aspect-video rounded-2xl overflow-hidden">
+                <img
+                  src="/api/placeholder/800/600"
+                  alt="About Us"
+                  className="object-cover w-full h-full transform hover:scale-110 transition-transform duration-700"
+                />
+              </div>
+            </div>
+            <div className="space-y-8">
+              <h2 className="text-4xl font-bold text-green-900">Our Mission</h2>
+              <p className="text-lg text-green-700">
+                We're revolutionizing agricultural commerce by creating direct connections between farmers and buyers, ensuring fair prices and sustainable practices.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-8">
+                <div className="p-6 bg-green-50 rounded-xl hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold text-green-800 mb-2">For Farmers</h3>
+                  <p className="text-green-600">Access stable contracts and fair prices</p>
+                </div>
+                <div className="p-6 bg-green-50 rounded-xl hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold text-green-800 mb-2">For Buyers</h3>
+                  <p className="text-green-600">Source quality produce directly</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Testimonials Carousel */}
+      <div className="py-24 bg-green-50">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl font-bold text-center text-green-900 mb-16">What Our Users Say</h2>
+          <div className="relative h-64">
+            {[
+              {
+                text: "FarmConnect transformed my farming business with reliable buyers and secure contracts.",
+                author: "John Doe",
+                role: "Organic Farmer"
+              },
+              {
+                text: "Sourcing quality produce directly from farmers has never been easier.",
+                author: "Jane Smith",
+                role: "Restaurant Owner"
+              },
+              {
+                text: "The platform's technical support has helped me improve my farming practices.",
+                author: "Michael Johnson",
+                role: "Commercial Farmer"
+              }
+            ].map((testimonial, i) => (
+              <div
+                key={i}
+                className={`absolute inset-0 transition-all duration-500 ${
+                  i === activeTestimonial 
+                    ? 'opacity-100 transform translate-x-0'
+                    : 'opacity-0 transform translate-x-full'
+                }`}
+              >
+                <div className="bg-white p-8 rounded-2xl shadow-lg">
+                  <p className="text-lg text-green-700 mb-6">{testimonial.text}</p>
+                  <div>
+                    <p className="font-semibold text-green-900">{testimonial.author}</p>
+                    <p className="text-green-600">{testimonial.role}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="py-24 bg-gradient-to-r from-green-600 to-green-700">
+        <div className="max-w-4xl mx-auto px-6 text-center text-white">
+          <h2 className="text-4xl font-bold mb-8">Ready to Transform Your Agricultural Business?</h2>
+          <p className="text-xl mb-12">Join thousands of satisfied users on FarmConnect</p>
+          <button className="px-12 py-4 bg-white text-green-600 rounded-full text-lg font-semibold hover:bg-green-50 transform hover:scale-105 transition-all">
+            Get Started Now
+          </button>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-green-900">
-        <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1 md:col-span-2">
-              <h3 className="text-xl font-bold text-white mb-4">FarmConnect</h3>
-              <p className="text-green-400 max-w-md">
-                Connecting farmers and buyers for a sustainable agricultural future. Join our platform to revolutionize farming.
+      <footer className="bg-green-900 text-green-50">
+        <div className="max-w-7xl mx-auto px-6 py-12">
+          <div className="grid md:grid-cols-4 gap-12">
+            <div className="md:col-span-2">
+              <h3 className="text-2xl font-bold mb-4">FarmConnect</h3>
+              <p className="text-green-200 max-w-md">
+                Building a sustainable agricultural future through technology and community.
               </p>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-white mb-4">Quick Links</h4>
-              <ul className="space-y-3">
-                <li><a href="/" className="text-green-400 hover:text-white">Home</a></li>
-                <li><a href="#about" className="text-green-400 hover:text-white">About Us</a></li>
-                <li><a href="/signin" className="text-green-400 hover:text-white">Sign In</a></li>
-                <li><a href="/signup" className="text-green-400 hover:text-white">Sign Up</a></li>
-              </ul>
+              <h4 className="font-semibold mb-4">Quick Links</h4>
+              <div className="space-y-2">
+                <button className="block text-green-200 hover:text-white transition-colors">Home</button>
+                <button className="block text-green-200 hover:text-white transition-colors">About</button>
+                <button className="block text-green-200 hover:text-white transition-colors">Services</button>
+                <button className="block text-green-200 hover:text-white transition-colors">Contact</button>
+              </div>
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-white mb-4">Contact</h4>
-              <ul className="space-y-3">
-                <li className="text-green-400">Email: info@farmconnect.com</li>
-                <li className="text-green-400">Phone: (555) 123-4567</li>
-                <li className="text-green-400">Address: 123 Farming Street, Agritown, AT 12345</li>
-              </ul>
+              <h4 className="font-semibold mb-4">Contact</h4>
+              <div className="space-y-2 text-green-200">
+                <p>info@farmconnect.com</p>
+                <p>(555) 123-4567</p>
+                <p>123 Farming Street</p>
+                <p>Agritown, AT 12345</p>
+              </div>
             </div>
           </div>
-          <div className="mt-8 border-t border-green-800 pt-8">
-            <p className="text-center text-green-400">© 2024 FarmConnect. All rights reserved.</p>
+          <div className="mt-12 pt-8 border-t border-green-800 text-center text-green-200">
+            © 2024 FarmConnect. All rights reserved.
           </div>
         </div>
       </footer>
+
+      <style jsx>{`
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes slide-up {
+          from { transform: translateY(20px); opacity: 0; }
+          to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+          100% { transform: translateY(0px); }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
+        }
+        
+        .animate-slide-up {
+          animation: slide-up 1s ease-out;
+        }
+        
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+
+        .border-l-12 {
+          border-left-width: 12px;
+        }
+      `}</style>
     </div>
-  )
+  );
 }
