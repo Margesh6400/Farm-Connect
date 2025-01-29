@@ -76,10 +76,10 @@ export default function Navbar() {
                   to="/signin"
                   className="text-white hover:text-green-300 px-4 py-2 text-sm font-medium transition-all duration-300 border border-transparent hover:border-green-300 rounded-lg"
                 >
-                  Sign in
+                  Sign In
                 </Link>
                 <Link
-                  to="/signup"
+                  to="/getstarted"
                   className="bg-gradient-to-r from-green-500 to-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:from-green-600 hover:to-green-700 transform hover:-translate-y-0.5"
                 >
                   Get Started
@@ -127,10 +127,10 @@ export default function Navbar() {
                     to="/signin"
                     className="block w-full px-3 py-2 text-base font-medium text-white hover:bg-green-700 rounded-md transition-colors duration-200"
                   >
-                    Sign in
+                    Sign In
                   </Link>
                   <Link
-                    to="/signup"
+                    to="/getstarted"
                     className="block w-full px-3 py-2 text-base font-medium text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 rounded-md text-center transition-all duration-200"
                   >
                     Get Started
