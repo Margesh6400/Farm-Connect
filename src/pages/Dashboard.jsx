@@ -37,7 +37,7 @@ const Dashboard = () => {
   return (
     <div className="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex pt-8">
       {/* Sidebar */}
-      <div className="w-72 bg-gradient-to-b from-green-800 to-green-900 p-6 text-white shadow-xl">
+      <div className="w-72 bg-gradient-to-b from-green-800 to-green-900 p-6 text-white shadow-xl mt-8">
         <div className="mb-8">
           <h2 className="text-2xl font-bold bg-green-700 p-4 rounded-lg shadow-lg text-center">
             Farmer's Dashboard
@@ -70,7 +70,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
+      <div className="flex-1 p-8 mt-8">
         <div className="bg-white rounded-2xl shadow-2xl p-8 border border-green-100">
           <div className="flex items-center justify-between mb-8 pb-6 border-b border-green-100">
             <div>
