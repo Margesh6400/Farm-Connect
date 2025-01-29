@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Leaf, BarChart3, ShoppingCart, MessageSquare } from 'lucide-react';
-import MarketDemand from '../components/MarketDemand';
-import AddCropDetails from '../components/AddCropDetails';
-import Negotiation from '../components/Negotiation';
-import Analytics from '../components/Analytics';
+import MarketDemand from '../components/dashboard/MarketDemand';
+import AddCropDetails from '../components/dashboard/AddCropDetails';
+import Negotiation from '../components/dashboard/Negotiation';
+import Analytics from '../components/dashboard/Analytics';
 
 const Dashboard = () => {
   const [user, setUser] = useState({
