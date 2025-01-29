@@ -57,8 +57,8 @@ export default function Navbar() {
                   {[
                     { name: 'Home', to: '/' },
                     { name: 'About Us', to: '/about' },
-                    { name: 'Contract', to: '/contract' },
-                    { name: 'Dashboard', to: '/dashboard' }
+                    { name: 'Dashboard', to: '/dashboard' },
+                    { name: 'Contract', to: '/contract' }
                   ].map((item) => (
                     <Link
                       key={item.name}
@@ -111,8 +111,8 @@ export default function Navbar() {
                 {[
                   { name: 'Home', to: '/' },
                   { name: 'About Us', to: '/about' },
-                  { name: 'Contract', to: '/contract' },
-                  { name: 'Dashboard', to: '/dashboard' }
+                  { name: 'Dashboard', to: '/dashboard' },
+                  { name: 'Contract', to: '/contract' }
                 ].map((item) => (
                   <Link
                     key={item.name}

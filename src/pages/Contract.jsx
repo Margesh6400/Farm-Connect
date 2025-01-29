@@ -1,6 +1,6 @@
 export default function Contract() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 p-8 pt-16">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
         <div className="bg-green-600 p-6">
           <h2 className="text-3xl font-bold text-white tracking-wide">
