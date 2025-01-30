@@ -6,6 +6,7 @@ import AddCropDetails from '../components/dashboard/AddCropDetails';
 import Negotiation from '../components/dashboard/Negotiation';
 import Analytics from '../components/dashboard/Analytics';
 
+// Background decoration component remains the same
 const BackgroundDecoration = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-white/80 to-green-100/90" />
@@ -41,6 +42,7 @@ const BackgroundDecoration = () => (
   </div>
 );
 
+// Other component definitions remain the same
 const RoleSelector = ({ role, setRole }) => (
   <div className="flex mb-8 bg-green-900/40 p-2 rounded-2xl">
     <motion.button
@@ -131,7 +133,6 @@ const Dashboard = () => {
   const menuItems = role === 'farmer' ? farmerMenuItems : buyerMenuItems;
 
   const renderSection = () => {
-    // You would need to create corresponding components for buyer sections
     if (role === 'farmer') {
       switch (activeSection) {
         case 'marketDemand':
@@ -146,7 +147,6 @@ const Dashboard = () => {
           return null;
       }
     } else {
-      // Placeholder for buyer sections
       return (
         <div className="text-center p-8 text-gray-600">
           {activeSection} component for buyers would go here
@@ -159,15 +159,15 @@ const Dashboard = () => {
     <div className="min-h-screen flex relative">
       <BackgroundDecoration />
       
-      {/* Sidebar */}
+      {/* Fixed Sidebar */}
       <motion.div 
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="w-72 bg-gradient-to-b from-green-900 to-emerald-900 p-6 text-white shadow-xl mt-8 relative z-10 rounded-r-3xl"
+        className="fixed top-0 left-0 h-screen w-72 bg-gradient-to-b from-green-900 to-emerald-900 p-6 text-white shadow-xl z-20 overflow-y-auto"
       >
         <motion.div 
-          className="mb-8"
+          className="mb-8 sticky top-0 bg-gradient-to-b from-green-900 to-emerald-900 pt-8 pb-4 z-10"
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
@@ -202,9 +202,9 @@ const Dashboard = () => {
         </nav>
       </motion.div>
 
-      {/* Main Content */}
+      {/* Main Content - Added margin to account for fixed sidebar */}
       <motion.div 
-        className="flex-1 p-8 mt-8"
+        className="flex-1 p-8 ml-72"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
