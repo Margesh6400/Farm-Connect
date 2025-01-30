@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FilePlus, ClipboardList, DollarSign, CheckCircle, MessageSquare } from 'lucide-react';
+import { FilePlus, ClipboardList, DollarSign, CheckCircle, MessageSquare, FileText, Clock, History } from 'lucide-react';
 import CreateContract from '../components/contract/CreateContract';
 import TrackContracts from '../components/contract/TrackContracts';
 import Negotiation from '../components/contract/Negotiation';
 import PaymentManagement from '../components/contract/PaymentManagement';
 import ContractCompletion from '../components/contract/ContractCompletion';
 
-// Background decoration component
 const BackgroundDecoration = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Gradient overlay */}
     <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-white/80 to-green-100/90" />
-    
-    {/* Animated circles */}
     {[...Array(3)].map((_, i) => (
       <motion.div
         key={i}
@@ -39,10 +35,39 @@ const BackgroundDecoration = () => (
             'rgba(167, 243, 208, 0.3)',
             'rgba(134, 239, 172, 0.3)',
             'rgba(187, 247, 208, 0.3)',
-          ][Math.floor(Math.random() * 3)],
+          ][i],
         }}
       />
     ))}
+  </div>
+);
+
+const RoleSelector = ({ role, setRole }) => (
+  <div className="flex mb-8 bg-green-900/40 p-2 rounded-2xl">
+    <motion.button
+      onClick={() => setRole('farmer')}
+      className={`flex-1 px-6 py-3 rounded-xl font-medium text-sm transition-all ${
+        role === 'farmer' 
+          ? 'bg-green-100 text-green-800' 
+          : 'bg-transparent text-white hover:bg-green-800'
+      }`}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      Farmer Contracts
+    </motion.button>
+    <motion.button
+      onClick={() => setRole('buyer')}
+      className={`flex-1 px-6 py-3 rounded-xl font-medium text-sm transition-all ${
+        role === 'buyer' 
+          ? 'bg-emerald-500 text-white' 
+          : 'bg-transparent text-white hover:bg-green-800'
+      }`}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    >
+      Buyer Contracts
+    </motion.button>
   </div>
 );
 
@@ -83,9 +108,10 @@ const MenuItem = ({ item, isActive, onClick }) => {
 };
 
 const Contract = () => {
+  const [role, setRole] = useState('farmer');
   const [activeSection, setActiveSection] = useState('createContract');
 
-  const menuItems = [
+  const farmerMenuItems = [
     { id: 'createContract', label: 'Create Contract', icon: FilePlus },
     { id: 'trackContracts', label: 'Track Contracts', icon: ClipboardList },
     { id: 'negotiation', label: 'Negotiation', icon: MessageSquare },
@@ -93,20 +119,39 @@ const Contract = () => {
     { id: 'contractCompletion', label: 'Contract Completion', icon: CheckCircle },
   ];
 
+  const buyerMenuItems = [
+    { id: 'reviewContracts', label: 'Review Contracts', icon: FileText },
+    { id: 'activeContracts', label: 'Active Contracts', icon: Clock },
+    { id: 'negotiation', label: 'Negotiation', icon: MessageSquare },
+    { id: 'payments', label: 'Payments', icon: DollarSign },
+    { id: 'contractHistory', label: 'Contract History', icon: History },
+  ];
+
+  const menuItems = role === 'farmer' ? farmerMenuItems : buyerMenuItems;
+
   const renderSection = () => {
-    switch (activeSection) {
-      case 'createContract':
-        return <CreateContract />;
-      case 'trackContracts':
-        return <TrackContracts />;
-      case 'negotiation':
-        return <Negotiation />;
-      case 'paymentManagement':
-        return <PaymentManagement />;
-      case 'contractCompletion':
-        return <ContractCompletion />;
-      default:
-        return null;
+    if (role === 'farmer') {
+      switch (activeSection) {
+        case 'createContract':
+          return <CreateContract />;
+        case 'trackContracts':
+          return <TrackContracts />;
+        case 'negotiation':
+          return <Negotiation />;
+        case 'paymentManagement':
+          return <PaymentManagement />;
+        case 'contractCompletion':
+          return <ContractCompletion />;
+        default:
+          return null;
+      }
+    } else {
+      // Placeholder for buyer sections
+      return (
+        <div className="text-center p-8 text-gray-600">
+          {activeSection} component for buyers would go here
+        </div>
+      );
     }
   };
 
@@ -127,11 +172,12 @@ const Contract = () => {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
         >
+          <RoleSelector role={role} setRole={setRole} />
           <motion.h2 
-            className="text-2xl font-bold bg-emerald-800 p-4 rounded-2xl shadow-lg text-center"
+            className="text-2xl font-bold bg-green-800/50 p-4 rounded-2xl shadow-lg text-center"
             whileHover={{
               scale: 1.02,
-              backgroundColor: "rgba(6, 78, 59, 1)",
+              backgroundColor: "rgba(6, 78, 59, 0.6)",
             }}
           >
             Contract Management
