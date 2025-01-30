@@ -7,7 +7,7 @@ const testimonials = [
     author: "Sarah Johnson",
     role: "Organic Farmer",
     text: "This platform has transformed how I sell my produce. The stable pricing and direct buyer connections have increased my profits by 40%.",
-    avatar: "/api/placeholder/80/80",
+    avatar: "https://media.istockphoto.com/id/1388253782/photo/positive-successful-millennial-business-professional-man-head-shot-portrait.jpg?s=2048x2048&w=is&k=20&c=0HU1oQGXlO4nrrMKKzAK4Jmu6XDLvXhTGjKScvrNIZw=",
     rating: 5,
     location: "California, USA"
   },
@@ -15,7 +15,7 @@ const testimonials = [
     author: "Michael Chen",
     role: "Agricultural Cooperative Leader",
     text: "The transparency and reliability of this marketplace have made it our go-to platform for connecting our 200+ member farmers with quality buyers.",
-    avatar: "/api/placeholder/80/80",
+    avatar: "https://images.unsplash.com/photo-1619895862022-09114b41f16f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rating: 5,
     location: "Ontario, Canada"
   },
@@ -23,10 +23,34 @@ const testimonials = [
     author: "Maria Garcia",
     role: "Small-Scale Farmer",
     text: "I appreciate how the platform has simplified contract farming. The support team is always there when you need them.",
-    avatar: "/api/placeholder/80/80",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rating: 5,
     location: "Madrid, Spain"
-  }
+  },
+  {
+    author: "Sarah Johnson",
+    role: "Organic Farmer",
+    text: "This platform has transformed how I sell my produce. The stable pricing and direct buyer connections have increased my profits by 40%.",
+    avatar: "https://media.istockphoto.com/id/1388253782/photo/positive-successful-millennial-business-professional-man-head-shot-portrait.jpg?s=2048x2048&w=is&k=20&c=0HU1oQGXlO4nrrMKKzAK4Jmu6XDLvXhTGjKScvrNIZw=",
+    rating: 5,
+    location: "California, USA"
+  },
+  {
+    author: "Michael Chen",
+    role: "Agricultural Cooperative Leader",
+    text: "The transparency and reliability of this marketplace have made it our go-to platform for connecting our 200+ member farmers with quality buyers.",
+    avatar: "https://images.unsplash.com/photo-1619895862022-09114b41f16f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    rating: 5,
+    location: "Ontario, Canada"
+  },
+  {
+    author: "Maria Garcia",
+    role: "Small-Scale Farmer",
+    text: "I appreciate how the platform has simplified contract farming. The support team is always there when you need them.",
+    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    rating: 5,
+    location: "Madrid, Spain"
+  },
 ];
 
 const FloatingElement = ({ children, delay = 0 }) => (
