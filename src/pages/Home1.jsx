@@ -3,6 +3,8 @@ import React from 'react';
 import FeaturesAboutSection from '../components/Home/FeaturesAboutSection';
 import AboutSection from '../components/Home/AboutSection';
 import MissionSection from '../components/Home/OurMission';
+import FooterSection from '../components/Home/footer';
+
 
 // Background decoration component
 const BackgroundDecoration = () => (
@@ -324,6 +326,7 @@ export default function LandingPage() {
       <FeaturesAboutSection/>
       <AboutSection/>
       <MissionSection/>
+      <FooterSection/>
     </div>
   );
 }
