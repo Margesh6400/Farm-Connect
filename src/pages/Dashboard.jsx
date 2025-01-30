@@ -5,6 +5,10 @@ import MarketDemand from '../components/dashboard/MarketDemand';
 import AddCropDetails from '../components/dashboard/AddCropDetails';
 import Negotiation from '../components/dashboard/Negotiation';
 import Analytics from '../components/dashboard/Analytics';
+import SearchCrops from '../components/buyerDashboard/SearchCrops';
+import ActivePurchases from '../components/buyerDashboard/ActivePurchases';
+import Suppliers from '../components/buyerDashboard/Suppliers';
+import Transactions from '../components/buyerDashboard/Transactions';
 
 // Background decoration component remains the same
 const BackgroundDecoration = () => (
@@ -126,7 +130,7 @@ const Dashboard = () => {
   const buyerMenuItems = [
     { id: 'searchCrops', label: 'Search Crops', icon: Search },
     { id: 'activePurchases', label: 'Active Purchases', icon: Clock },
-    { id: 'suppliers', label: 'Suppliers', icon: Users },
+    { id: 'suppliers', label: 'Farmers', icon: Users },
     { id: 'transactions', label: 'Transactions', icon: DollarSign },
   ];
 
@@ -147,11 +151,18 @@ const Dashboard = () => {
           return null;
       }
     } else {
-      return (
-        <div className="text-center p-8 text-gray-600">
-          {activeSection} component for buyers would go here
-        </div>
-      );
+      switch (activeSection) {
+        case 'searchCrops':
+          return <SearchCrops />;
+        case 'activePurchases':
+          return <ActivePurchases />;
+        case 'suppliers':
+          return <Suppliers />;
+        case 'transactions':
+          return <Transactions />;
+        default:
+          return null;
+      }
     }
   };
 
