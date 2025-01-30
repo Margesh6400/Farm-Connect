@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { LineChart, Calendar, Users, Shield, Truck, ScatterChart } from 'lucide-react';
 
 // SVG Pattern Component for card backgrounds
@@ -25,109 +24,113 @@ const FeatureCard = ({ feature, index }) => {
   };
 
   return (
-    <motion.div
-      className="relative group"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
+    <div
+      className="relative group transform transition-transform duration-300 hover:-translate-y-2"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        opacity: 0,
+        animation: `fadeSlideIn 0.6s ease-out ${index * 0.1}s forwards`
+      }}
     >
-      <motion.div 
-        className="absolute inset-0 rounded-2xl"
-        style={{ background: `linear-gradient(135deg, ${colors.primary}10, ${colors.secondary}20)` }}
-        initial={{ scale: 0, borderRadius: "16px" }}
-        animate={{ scale: 1, borderRadius: isHovered ? "24px" : "16px" }}
-        transition={{ duration: 0.3 }}
+      <div 
+        className="absolute inset-0 rounded-2xl transition-all duration-300"
+        style={{ 
+          background: `linear-gradient(135deg, ${colors.primary}10, ${colors.secondary}20)`,
+          transform: `scale(${isHovered ? 1.02 : 1})`,
+          borderRadius: isHovered ? '24px' : '16px'
+        }}
       />
 
       <PatternBackground />
 
-      <motion.div 
-        className="relative p-8 backdrop-blur-sm rounded-2xl border"
-        style={{ borderColor: `${colors.primary}30` }}
-        whileHover={{ y: -8 }}
+      <div 
+        className="relative p-8 backdrop-blur-sm rounded-2xl border transition-colors duration-300 flex flex-col items-center text-center"
+        style={{ borderColor: `${colors.primary}${isHovered ? '40' : '30'}` }}
       >
-        {/* Icon Container */}
-        <motion.div 
-          className="mb-6 relative"
-          animate={isHovered ? {
-            y: [0, -10, 0],
-            rotate: [0, -5, 5, 0]
-          } : {}}
-          transition={{ duration: 1, repeat: isHovered ? Infinity : 0 }}
-        >
+        {/* Icon Container - Centered with Wobble */}
+        <div className="mb-6 relative flex justify-center w-full">
           {/* Background circle */}
-          <motion.div
-            className="absolute inset-0 rounded-full"
-            style={{ backgroundColor: `${colors.primary}20` }}
-            initial={{ scale: 0 }}
-            animate={{ scale: isHovered ? 1.2 : 1 }}
-            transition={{ duration: 0.3 }}
+          <div
+            className="absolute w-14 h-14 rounded-full transition-transform duration-300"
+            style={{ 
+              backgroundColor: `${colors.primary}20`,
+              transform: `scale(${isHovered ? 1.2 : 1})`
+            }}
           />
           
-          {/* Icon */}
-          <div className="relative w-14 h-14 flex items-center justify-center"
-               style={{ color: colors.primary }}>
+          {/* Icon - Centered with Wobble */}
+          <div 
+            className="relative flex items-center justify-center w-14 h-14"
+            style={{ 
+              color: colors.primary,
+              animation: isHovered ? 'wobble 1s ease infinite' : 'none'
+            }}
+          >
             {feature.icon}
           </div>
-        </motion.div>
+        </div>
 
-        {/* Content */}
-        <motion.h3 
-          className="text-2xl font-semibold mb-3"
-          style={{ color: colors.text }}
-          animate={isHovered ? { scale: 1.05 } : { scale: 1 }}
+        {/* Content - Centered */}
+        <h3 
+          className="text-2xl font-semibold mb-3 transition-transform duration-300"
+          style={{ 
+            color: colors.text,
+            transform: isHovered ? 'scale(1.02)' : 'none'
+          }}
         >
           {feature.title}
-        </motion.h3>
+        </h3>
 
-        <motion.p 
-          className="mb-4 leading-relaxed"
-          style={{ color: colors.highlight }}
-          initial={{ opacity: 0.8 }}
-          animate={{ opacity: isHovered ? 1 : 0.8 }}
+        <p 
+          className="mb-4 leading-relaxed transition-opacity duration-300"
+          style={{ 
+            color: colors.highlight,
+            opacity: isHovered ? 1 : 0.8
+          }}
         >
           {feature.description}
-        </motion.p>
+        </p>
 
-        {/* Feature Highlights */}
-        <motion.ul
-          className="space-y-3"
-          animate={{ height: isHovered ? "auto" : 0, opacity: isHovered ? 1 : 0 }}
+        {/* Feature Highlights - Centered */}
+        <div
+          className="space-y-3 transition-all duration-300 overflow-hidden w-full"
+          style={{ 
+            maxHeight: isHovered ? '200px' : '0',
+            opacity: isHovered ? 1 : 0
+          }}
         >
           {feature.highlights.map((highlight, idx) => (
-            <motion.li
+            <div
               key={idx}
-              className="flex items-center text-sm"
-              style={{ color: colors.highlight }}
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: isHovered ? 0 : -20, opacity: isHovered ? 1 : 0 }}
-              transition={{ delay: idx * 0.1 }}
+              className="flex items-center text-sm transition-all duration-300 justify-center"
+              style={{ 
+                color: colors.highlight,
+                transform: `translateX(${isHovered ? '0' : '-20px'})`,
+                opacity: isHovered ? 1 : 0,
+                transitionDelay: `${idx * 0.1}s`
+              }}
             >
-              <motion.div 
+              <div 
                 className="w-2 h-2 rounded-full mr-3"
                 style={{ backgroundColor: colors.primary }}
               />
               {highlight}
-            </motion.li>
+            </div>
           ))}
-        </motion.ul>
+        </div>
 
-        {/* Interactive background element */}
-        <motion.div
-          className="absolute -bottom-4 -right-4 w-32 h-32 opacity-20 rounded-full"
+        {/* Interactive background glow */}
+        <div
+          className="absolute -bottom-4 -right-4 w-32 h-32 rounded-full transition-all duration-300"
           style={{
             background: `radial-gradient(circle at center, ${colors.primary}, transparent)`,
-          }}
-          animate={{
-            scale: isHovered ? 2 : 1,
-            opacity: isHovered ? 0.3 : 0.1,
+            opacity: isHovered ? 0.2 : 0.1,
+            transform: `scale(${isHovered ? 1.5 : 1})`
           }}
         />
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 };
 
@@ -233,13 +236,35 @@ const FeaturesGrid = () => {
 
   return (
     <section className="py-24 relative overflow-hidden">
+      <style>{`
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes wobble {
+          0% { transform: translateY(0) rotate(0); }
+          25% { transform: translateY(-4px) rotate(-3deg); }
+          50% { transform: translateY(-2px) rotate(0); }
+          75% { transform: translateY(-4px) rotate(3deg); }
+          100% { transform: translateY(0) rotate(0); }
+        }
+      `}</style>
+      
       <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50 opacity-70" />
       <div className="max-w-7xl mx-auto px-6 relative">
-        <motion.div 
+        <div 
           className="text-center mb-20"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          style={{
+            opacity: 0,
+            animation: 'fadeSlideIn 0.6s ease-out forwards'
+          }}
         >
           <h2 className="text-5xl font-bold text-slate-900 mb-6">
             Intelligent Farming Solutions
@@ -248,7 +273,7 @@ const FeaturesGrid = () => {
             Leverage cutting-edge technology to maximize your agricultural potential
             and connect with the right buyers at the right time.
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
