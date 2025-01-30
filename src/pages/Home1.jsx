@@ -2,7 +2,9 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import FeaturesAboutSection from '../components/Home/FeaturesAboutSection';
 import AboutSection from '../components/Home/AboutSection';
+import About2Section from '../components/Home/AboutUs2';
 import MissionSection from '../components/Home/OurMission';
+import TestimonialSection from '../components/Home/TestimonialsSection';
 import FooterSection from '../components/Home/footer';
 
 
@@ -325,7 +327,9 @@ export default function LandingPage() {
       </motion.div>
       <FeaturesAboutSection/>
       <AboutSection/>
+      <About2Section/>
       <MissionSection/>
+      <TestimonialSection/>
       <FooterSection/>
     </div>
   );
