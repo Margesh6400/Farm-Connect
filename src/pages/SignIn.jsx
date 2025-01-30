@@ -5,7 +5,7 @@ const dummyUsers = [
   { email: 'john.farmer@example.com', password: 'Test123!' },
   { email: 'sarah.smith@example.com', password: 'Farmer456!' },
   { email: 'mike.davis@example.com', password: 'Agriculture789!' },
-  { email: 'admin@naij.com', password: '1234' }
+  { email: 'admin@nw.com', password: '1234' }
 ];
 
 const FarmerRegistration = () => {
