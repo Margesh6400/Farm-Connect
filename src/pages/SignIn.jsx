@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-
-const dummyUsers = [
-  { email: 'john.farmer@example.com', password: 'Test123!' },
-  { email: 'sarah.smith@example.com', password: 'Farmer456!' },
-  { email: 'mike.davis@example.com', password: 'Agriculture789!' },
-  { email: 'admin@nw.com', password: '1234' }
-];
+import { motion, AnimatePresence } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 const FarmerRegistration = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +10,13 @@ const FarmerRegistration = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const dummyUsers = [
+    { email: 'john.farmer@example.com', password: 'Test123!' },
+    { email: 'sarah.smith@example.com', password: 'Farmer456!' },
+    { email: 'mike.davis@example.com', password: 'Agriculture789!' },
+    { email: 'admin@nw.com', password: '1234' }
+  ];
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -24,7 +25,7 @@ const FarmerRegistration = () => {
     setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const user = dummyUsers.find(u => 
       u.email === formData.email && u.password === formData.password
@@ -32,11 +33,67 @@ const FarmerRegistration = () => {
 
     if (user) {
       setSuccess(true);
-      setError('');
+      // Simulate redirect after success animation
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 2000);
     } else {
       setError('Invalid credentials. Try using one of the test accounts listed below.');
     }
   };
+
+  if (success) {
+    return (
+      <motion.div 
+        className="fixed inset-0 bg-green-500 flex items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <motion.div
+          className="text-white text-center"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ 
+            type: "spring",
+            stiffness: 260,
+            damping: 20,
+            delay: 0.3
+          }}
+        >
+          <motion.div 
+            className="mb-6 relative"
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [0, 360]
+            }}
+            transition={{
+              duration: 1,
+              times: [0, 0.5, 1]
+            }}
+          >
+            <Check size={80} className="mx-auto text-white" />
+          </motion.div>
+          <motion.h2 
+            className="text-3xl font-bold mb-4"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            Login Successful!
+          </motion.h2>
+          <motion.p
+            className="text-lg"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.7 }}
+          >
+            Redirecting to dashboard...
+          </motion.p>
+        </motion.div>
+      </motion.div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-green-50 to-white p-6">
@@ -109,14 +166,6 @@ const FarmerRegistration = () => {
               />
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-green-900/20 to-transparent" />
             </motion.div>
-            
-            <motion.div 
-              className="text-xl text-gray-600 text-center font-medium"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              Smart farming solutions at your fingertips
-            </motion.div>
           </motion.div>
 
           {/* Right side */}
@@ -126,112 +175,76 @@ const FarmerRegistration = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <div>
-              <h3 className="text-gray-800 text-4xl font-bold mb-4">Welcome Back!</h3>
-              <p className="text-gray-600 text-lg">Access your farm management dashboard</p>
-            </div>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-5">
-                <motion.div 
-                  className="relative"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full p-4 bg-white text-gray-800 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-0 placeholder-gray-400 transition-all duration-200"
-                  />
-                </motion.div>
-                
-                <motion.div 
-                  className="relative"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="w-full p-4 bg-white text-gray-800 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-0 placeholder-gray-400 transition-all duration-200"
-                  />
-                  <a href="/forgot-password" className="absolute right-4 top-4 text-sm text-green-600 hover:text-green-700">
-                    Forgot?
-                  </a>
-                </motion.div>
-              </div>
-
-              {error && (
-                <motion.div 
-                  className="text-red-500 text-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  {error}
-                </motion.div>
-              )}
-              
-              {success && (
-                <motion.div 
-                  className="text-green-500 text-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  Successfully logged in!
-                </motion.div>
-              )}
-              
-              <motion.button
-                type="submit"
-                className="w-full p-4 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-xl hover:from-green-700 hover:to-green-600 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+            <AnimatePresence mode="wait">
+              <motion.form 
+                key="loginForm"
+                onSubmit={handleSubmit} 
+                className="space-y-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
               >
-                Sign in
-              </motion.button>
-            </form>
-
-            {/* <div className="mt-8">
-              <p className="text-sm text-gray-600 mb-2">Test Accounts:</p>
-              {dummyUsers.map((user, index) => (
-                <div key={index} className="text-xs text-gray-500">
-                  Email: {user.email} | Password: {user.password}
+                <div className="space-y-5">
+                  <motion.div 
+                    className="relative"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Email Address"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="w-full p-4 bg-white text-gray-800 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-0 placeholder-gray-400 transition-all duration-200"
+                    />
+                  </motion.div>
+                  
+                  <motion.div 
+                    className="relative"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="w-full p-4 bg-white text-gray-800 rounded-xl border-2 border-gray-200 focus:border-green-500 focus:ring-0 placeholder-gray-400 transition-all duration-200"
+                    />
+                  </motion.div>
                 </div>
-              ))}
-            </div> */}
 
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <div className="h-px bg-gray-200 flex-1" />
-                <p className="text-gray-500">or continue with</p>
-                <div className="h-px bg-gray-200 flex-1" />
-              </div>
-              
-              <div className="grid grid-cols-2 gap-4">
-                <motion.button 
-                  className="p-4 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-200 text-lg border-2 border-gray-200 hover:border-gray-300 hover:shadow-md flex items-center justify-center gap-3"
+                {error && (
+                  <motion.div 
+                    className="text-red-500 text-sm"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    {error}
+                  </motion.div>
+                )}
+                
+                <motion.button
+                  type="submit"
+                  className="w-full p-4 bg-gradient-to-r from-green-600 to-green-500 text-white rounded-xl hover:from-green-700 hover:to-green-600 transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <span className="text-xl">G</span>
-                  <span>Google</span>
+                  Sign in
                 </motion.button>
-                <motion.button 
-                  className="p-4 bg-white text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-200 text-lg border-2 border-gray-200 hover:border-gray-300 hover:shadow-md flex items-center justify-center gap-3"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <span className="text-xl">f</span>
-                  <span>Facebook</span>
-                </motion.button>
-              </div>
-            </div>
+
+                {/* <div className="mt-4 text-sm text-gray-600">
+                  <p className="mb-2">Test Accounts:</p>
+                  {dummyUsers.map((user, index) => (
+                    <div key={index} className="text-xs text-gray-500">
+                      Email: {user.email} | Password: {user.password}
+                    </div>
+                  ))}
+                </div> */}
+              </motion.form>
+            </AnimatePresence>
           </motion.div>
         </div>
       </div>
