@@ -5,9 +5,8 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const FarmConnectLogo = () => (
-  <motion.svg 
-    viewBox="0 0 100 100" 
-    className="w-12 h-12"
+  <motion.div
+    className="w-12 h-12 overflow-hidden rounded-full"
     animate={{ 
       rotate: [0, 2, -2, 2, 0],
       scale: [1, 1.05, 0.95, 1.05, 1]
@@ -18,149 +17,12 @@ const FarmConnectLogo = () => (
       ease: "easeInOut"
     }}
   >
-    <defs>
-      <linearGradient id="fieldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style={{ stopColor: '#86efac' }}>
-          <animate 
-            attributeName="stop-color" 
-            values="#86efac; #4ade80; #86efac"
-            dur="4s" 
-            repeatCount="indefinite"
-          />
-        </stop>
-        <stop offset="100%" style={{ stopColor: '#4ade80' }}>
-          <animate 
-            attributeName="stop-color" 
-            values="#4ade80; #22c55e; #4ade80"
-            dur="4s" 
-            repeatCount="indefinite"
-          />
-        </stop>
-      </linearGradient>
-      
-      <radialGradient id="sunGradient">
-        <stop offset="0%" stopColor="#fde047" />
-        <stop offset="100%" stopColor="#facc15" />
-      </radialGradient>
-    </defs>
-    
-    {/* Sun */}
-    <motion.circle
-      cx="75"
-      cy="25"
-      r="12"
-      fill="url(#sunGradient)"
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ delay: 0.2, duration: 0.5 }}
-    >
-      <animate
-        attributeName="opacity"
-        values="0.8;1;0.8"
-        dur="3s"
-        repeatCount="indefinite"
-      />
-    </motion.circle>
-    
-    {/* Wheat stalks with improved detail */}
-    <motion.g
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ delay: 0.3, duration: 0.5 }}
-    >
-      {/* Center wheat stalk */}
-      <motion.path 
-        d="M50 65 C50 45 50 35 50 25"
-        stroke="#22c55e"
-        strokeWidth="3"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1 }}
-      />
-      <motion.path 
-        d="M50 45 L45 35 M50 45 L55 35 M50 35 L45 25 M50 35 L55 25"
-        stroke="#22c55e"
-        strokeWidth="2"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      />
-      
-      {/* Left wheat */}
-      <motion.path 
-        d="M35 65 C35 45 40 35 45 30"
-        stroke="#22c55e"
-        strokeWidth="3"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1 }}
-      />
-      <motion.path 
-        d="M35 55 L30 45 M35 55 L40 45 M35 45 L30 35 M35 45 L40 35"
-        stroke="#22c55e"
-        strokeWidth="2"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      />
-      
-      {/* Right wheat */}
-      <motion.path 
-        d="M65 65 C65 45 60 35 55 30"
-        stroke="#22c55e"
-        strokeWidth="3"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1 }}
-      />
-      <motion.path 
-        d="M65 55 L60 45 M65 55 L70 45 M65 45 L60 35 M65 45 L70 35"
-        stroke="#22c55e"
-        strokeWidth="2"
-        fill="none"
-        initial={{ pathLength: 0 }}
-        animate={{ pathLength: 1 }}
-        transition={{ duration: 1, delay: 0.5 }}
-      />
-    </motion.g>
-    
-    {/* Rolling hills with smoother animation */}
-    <motion.path 
-      d="M0 70 Q25 65 50 70 Q75 75 100 70 L100 100 L0 100 Z"
-      fill="url(#fieldGradient)"
-      initial={{ y: 50 }}
-      animate={{ y: 0 }}
-      transition={{ 
-        duration: 0.8, 
-        delay: 0.8,
-        ease: "easeOut"
-      }}
+    <img 
+      src="https://i.ibb.co/fdV13qmt/Screenshot-2025-01-30-230904.png"
+      alt="FarmConnect Logo" 
+      className="w-full h-full object-cover"
     />
-    
-    {/* Subtle grass details */}
-    <motion.g
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1, duration: 0.5 }}
-    >
-      {[...Array(8)].map((_, i) => (
-        <motion.path
-          key={i}
-          d={`M${10 + i * 12} 75 L${10 + i * 12} 70`}
-          stroke="#22c55e"
-          strokeWidth="1"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ delay: 1 + i * 0.1, duration: 0.3 }}
-        />
-      ))}
-    </motion.g>
-  </motion.svg>
+  </motion.div>
 );
 
 const NavItem = ({ item, scrolled }) => (
