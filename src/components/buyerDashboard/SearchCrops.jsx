@@ -143,7 +143,7 @@ const CropMarketplace = () => {
       location: 'Green Valley',
       farmer: 'Healthy Greens',
       rating: 4.6,
-      image: 'https://www.seed-bank.ca/wp-content/uploads/how-to-grow-spinach-2048x2048.jpg',
+      image: 'https://cdn.britannica.com/30/82530-050-79911DD4/Spinach-leaves-vitamins-source-person.jpg?w=300',
       delivery: '2-3 days',
       description: 'Fresh organic spinach rich in nutrients.',
       certification: 'USDA Organic'
