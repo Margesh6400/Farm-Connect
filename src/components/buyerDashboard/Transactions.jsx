@@ -1,6 +1,3 @@
-<<<<<<< HEAD
- import React from 'react';
-=======
 import React, { useState } from 'react';
 
 const PaymentManagement = () => {
@@ -122,7 +119,6 @@ const PaymentManagement = () => {
   };
 
   const stats = getTotalStats();
->>>>>>> 557cedae8ebf48fafc7b923a5dfd466d87c90aba
 
   return (
     <div className="max-w-7xl mx-auto p-6 bg-gray-50">
