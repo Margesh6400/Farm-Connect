@@ -71,6 +71,62 @@ const ActivePurchases = () => {
       contactPerson: 'Sarah Johnson',
       phone: '+1 234-567-8901',
       email: 'sarah@example.com'
+    },
+    {
+      id: 'ORD-2024-003',
+      date: '2024-01-30',
+      status: 'in-transit',
+      estimatedDelivery: '2024-02-05',
+      totalAmount: 3900,
+      items: [
+        {
+          id: 3,
+          name: 'Basmati Rice',
+          quantity: 13,
+          unit: 'ton',
+          price: 300,
+          farmer: 'Golden Grains Ltd',
+          image: '/api/placeholder/400/300'
+        }
+      ],
+      shipmentUpdates: [
+        { date: '2024-01-30', status: 'Order Confirmed', completed: true },
+        { date: '2024-01-31', status: 'Processing', completed: true },
+        { date: '2024-02-01', status: 'In Transit', completed: true },
+        { date: '2024-02-05', status: 'Delivery', completed: false }
+      ],
+      deliveryAddress: '789 Distribution Rd, Logistics Hub',
+      contactPerson: 'Michael Brown',
+      phone: '+1 234-567-8902',
+      email: 'michael@example.com'
+    },
+    {
+      id: 'ORD-2024-004',
+      date: '2024-02-01',
+      status: 'processing',
+      estimatedDelivery: '2024-02-06',
+      totalAmount: 3000,
+      items: [
+        {
+          id: 4,
+          name: 'Organic Carrots',
+          quantity: 20,
+          unit: 'ton',
+          price: 150,
+          farmer: 'Healthy Harvest',
+          image: '/api/placeholder/400/300'
+        }
+      ],
+      shipmentUpdates: [
+        { date: '2024-02-01', status: 'Order Confirmed', completed: true },
+        { date: '2024-02-02', status: 'Processing', completed: true },
+        { date: '2024-02-04', status: 'In Transit', completed: false },
+        { date: '2024-02-06', status: 'Delivery', completed: false }
+      ],
+      deliveryAddress: '1010 Market St, Commerce City',
+      contactPerson: 'Emily Davis',
+      phone: '+1 234-567-8903',
+      email: 'emily@example.com'
     }
   ]);
 
