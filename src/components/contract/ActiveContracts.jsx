@@ -90,6 +90,125 @@ const ActiveContracts = () => {
         protein: '2%',
         purity: '90%'
       }
+    },
+    {
+      id: 6,
+      type: 'Sweet Mangoes',
+      farmer: 'Mango Valley',
+      buyer: 'Tropical Fruits Co.',
+      quantity: '80 tons',
+      price: '₹300/ton',
+      deadline: '2025-08-15',
+      status: 'In Progress',
+      progress: 55,
+      deliveryDate: '2025-08-05',
+      qualityMetrics: {
+        moisture: '18%',
+        protein: '3%',
+        purity: '92%'
+      }
+    },
+    {
+      id: 7,
+      type: 'Golden Corn',
+      farmer: 'Nebraska Fields',
+      buyer: 'Cornucopia Farms',
+      quantity: '90 tons',
+      price: '₹220/ton',
+      deadline: '2025-09-20',
+      status: 'Pending Delivery',
+      progress: 70,
+      deliveryDate: '2025-09-10',
+      qualityMetrics: {
+        moisture: '14%',
+        protein: '8%',
+        purity: '95%'
+      }
+    },
+    {
+      id: 8,
+      type: 'Fresh Strawberries',
+      farmer: 'Berry Fields',
+      buyer: 'Berry Best Farms',
+      quantity: '40 tons',
+      price: '₹250/ton',
+      deadline: '2025-10-25',
+      status: 'In Progress',
+      progress: 60,
+      deliveryDate: '2025-10-15',
+      qualityMetrics: {
+        moisture: '10%',
+        protein: '4%',
+        purity: '98%'
+      }
+    },
+    {
+      id: 9,
+      type: 'Organic Spinach',
+      farmer: 'Green Valley',
+      buyer: 'Healthy Greens',
+      quantity: '50 tons',
+      price: '₹100/ton',
+      deadline: '2025-11-30',
+      status: 'Pending Delivery',
+      progress: 80,
+      deliveryDate: '2025-11-20',
+      qualityMetrics: {
+        moisture: '12%',
+        protein: '6%',
+        purity: '97%'
+      }
+    },
+    {
+      id: 10,
+      type: 'Sweet Potatoes',
+      farmer: 'Sweet Valley',
+      buyer: 'Root Farms',
+      quantity: '70 tons',
+      price: '₹130/ton',
+      deadline: '2025-12-15',
+      status: 'In Progress',
+      progress: 45,
+      deliveryDate: '2025-12-05',
+      qualityMetrics: {
+        moisture: '15%',
+        protein: '5%',
+        purity: '94%'
+      }
+    },
+    {
+      id: 11,
+      type: 'Organic Apples',
+      farmer: 'Apple Orchard',
+      buyer: 'Fruit Market Co.',
+      quantity: '50 tons',
+      price: '₹400/ton',
+      deadline: '2025-01-15',
+      status: 'In Progress',
+      progress: 60,
+      deliveryDate: '2025-01-05',
+      qualityMetrics: {
+        moisture: '10%',
+        protein: '2%',
+        purity: '95%'
+      }
+    },
+    {
+      id: 12,
+      type: 'Organic Carrots',
+      farmer: 'Carrot Farm',
+      buyer: 'Vegetable Market Co.',
+      quantity: '40 tons',
+      price: '₹200/ton',
+      deadline: '2025-02-15',
+      status: 'Pending Delivery',
+      progress: 70,
+      deliveryDate: '2025-02-05',
+      qualityMetrics: {
+        moisture: '12%',
+        protein: '3%',
+        purity: '97%'
+      }
     }
   ];
 
