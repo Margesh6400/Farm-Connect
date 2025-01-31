@@ -1,354 +1,318 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { 
-  DollarSign, 
-  ArrowUpRight, 
-  ArrowDownRight, 
-  Filter,
-  Calendar,
-  Search,
-  Download,
-  TrendingUp,
-  TrendingDown,
-  MoreVertical,
-  ChevronDown
-} from 'lucide-react';
 
-const TransactionDashboard = () => {
-  const [selectedFilter, setSelectedFilter] = useState('all');
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const transactions = [
+const PaymentManagement = () => {
+  const [payments, setPayments] = useState([
     {
       id: 1,
-      type: 'purchase',
-      product: 'Organic Tomatoes',
-      amount: 2500,
-      date: '2024-01-15',
-      status: 'completed',
-      farmer: 'Green Valley Farms',
-      quantity: '2.5 tons',
-      paymentMethod: 'Bank Transfer',
-      invoiceNumber: 'INV-001-2024'
+      buyer: 'Buyer A',
+      cropType: 'Wheat',
+      status: 'Pending',
+      amount: 12500,
+      advance: 2500,
+      remainingAmount: 10000,
+      dueDate: '2023-12-15',
+      invoiceGenerated: false,
+      paymentHistory: [
+        { amount: 2500, date: '2023-11-01', type: 'Advance Payment' }
+      ],
+      contractRef: 'CTR-2023-001',
+      paymentTerms: 'Net 30',
+      invoiceNumber: null,
+      lastReminder: null,
+      notes: ''
     },
     {
       id: 2,
-      type: 'sale',
-      product: 'Premium Apples',
-      amount: 3800,
-      date: '2024-01-18',
-      status: 'pending',
-      farmer: 'Sunshine Orchards',
-      quantity: '3 tons',
-      paymentMethod: 'Credit Card',
-      invoiceNumber: 'INV-002-2024'
-    },
-    {
-      id: 3,
-      type: 'purchase',
-      product: 'Organic Wheat',
-      amount: 5200,
-      date: '2024-01-20',
-      status: 'completed',
-      farmer: 'Golden Grains Co.',
-      quantity: '5 tons',
-      paymentMethod: 'Bank Transfer',
-      invoiceNumber: 'INV-003-2024'
+      buyer: 'Buyer B',
+      cropType: 'Corn',
+      status: 'Partial',
+      amount: 9600,
+      advance: 4800,
+      remainingAmount: 4800,
+      dueDate: '2023-11-30',
+      invoiceGenerated: true,
+      paymentHistory: [
+        { amount: 4800, date: '2023-10-15', type: 'Advance Payment' }
+      ],
+      contractRef: 'CTR-2023-002',
+      paymentTerms: 'Net 45',
+      invoiceNumber: 'INV-2023-002',
+      lastReminder: '2023-11-15',
+      notes: 'Second installment scheduled for month end'
     }
-  ];
+  ]);
 
-  const stats = [
-    { label: 'Total Purchases', value: '$12,500', trend: 'up', percentage: '12.5' },
-    { label: 'Total Sales', value: '$8,800', trend: 'down', percentage: '5.2' },
-    { label: 'Active Orders', value: '25', trend: 'up', percentage: '8.7' },
-    { label: 'Pending Payments', value: '$3,200', trend: 'down', percentage: '2.1' }
-  ];
+  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [note, setNote] = useState('');
 
-  const filters = ['all', 'purchase', 'sale', 'completed', 'pending'];
+  const generateInvoiceNumber = () => {
+    return `INV-${new Date().getFullYear()}-${String(payments.length + 1).padStart(3, '0')}`;
+  };
 
-  const filterTransactions = () => {
-    return transactions.filter(transaction => {
-      const matchesFilter = selectedFilter === 'all' || 
-        transaction.type === selectedFilter || 
-        transaction.status === selectedFilter;
-      
-      const matchesSearch = transaction.product.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        transaction.farmer.toLowerCase().includes(searchTerm.toLowerCase());
+  const handleGenerateInvoice = (payment) => {
+    const invoiceNumber = generateInvoiceNumber();
+    setPayments(payments.map(p => 
+      p.id === payment.id 
+        ? { ...p, invoiceGenerated: true, invoiceNumber } 
+        : p
+    ));
+  };
 
-      return matchesFilter && matchesSearch;
+  const handleRequestConfirmation = (payment) => {
+    const now = new Date().toISOString();
+    setPayments(payments.map(p => 
+      p.id === payment.id 
+        ? { ...p, lastReminder: now } 
+        : p
+    ));
+  };
+
+  const handleAddPayment = (payment, amount) => {
+    const newPayment = {
+      amount: parseFloat(amount),
+      date: new Date().toISOString(),
+      type: 'Installment Payment'
+    };
+
+    const updatedPayment = {
+      ...payment,
+      remainingAmount: payment.remainingAmount - parseFloat(amount),
+      paymentHistory: [...payment.paymentHistory, newPayment],
+      status: payment.remainingAmount - parseFloat(amount) <= 0 ? 'Paid' : 'Partial'
+    };
+
+    setPayments(payments.map(p => 
+      p.id === payment.id ? updatedPayment : p
+    ));
+    setSelectedPayment(null);
+  };
+
+  const handleAddNote = (paymentId) => {
+    if (!note.trim()) return;
+    
+    setPayments(payments.map(p => 
+      p.id === paymentId 
+        ? { ...p, notes: note } 
+        : p
+    ));
+    setNote('');
+  };
+
+  const filteredPayments = payments
+    .filter(payment => {
+      const matchesSearch = payment.buyer.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          payment.cropType.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          payment.contractRef.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = filterStatus === 'all' || payment.status === filterStatus;
+      return matchesSearch && matchesStatus;
     });
+
+  const getTotalStats = () => {
+    return payments.reduce((acc, payment) => {
+      acc.total += payment.amount;
+      acc.received += payment.amount - payment.remainingAmount;
+      acc.pending += payment.remainingAmount;
+      return acc;
+    }, { total: 0, received: 0, pending: 0 });
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100
-      }
-    }
-  };
-
-  const cardVariants = {
-    hover: {
-      scale: 1.02,
-      transition: {
-        type: 'spring',
-        stiffness: 400,
-        damping: 10
-      }
-    },
-    tap: {
-      scale: 0.98
-    }
-  };
-
-  const detailsVariants = {
-    hidden: {
-      opacity: 0,
-      height: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 30
-      }
-    },
-    visible: {
-      opacity: 1,
-      height: 'auto',
-      transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 30
-      }
-    }
-  };
+  const stats = getTotalStats();
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <motion.div 
-        className="max-w-7xl mx-auto space-y-6"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {/* Header */}
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Transaction History</h1>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center space-x-2 bg-green-500 text-white px-4 py-2 rounded-lg"
-          >
-            <Download className="w-4 h-4" />
-            <span>Export</span>
-          </motion.button>
-        </div>
+    <div className="max-w-7xl mx-auto p-6 bg-gray-50">
+      <div className="border-l-4 border-green-500 pl-4 mb-8">
+        <h2 className="text-3xl font-bold text-green-800">Payment & Invoice Management</h2>
+        <p className="mt-2 text-lg text-green-600">Track payments, generate invoices, and manage financial records</p>
+      </div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              variants={itemVariants}
-              className="bg-white p-6 rounded-xl shadow-sm"
-              whileHover={{
-                y: -5,
-                transition: { type: 'spring', stiffness: 300 }
-              }}
-            >
-              <div className="flex justify-between items-start">
-                <h3 className="text-gray-500 font-medium">{stat.label}</h3>
-                {stat.trend === 'up' ? (
-                  <TrendingUp className="w-5 h-5 text-green-500" />
-                ) : (
-                  <TrendingDown className="w-5 h-5 text-red-500" />
-                )}
-              </div>
-              <p className="text-2xl font-bold mt-2">{stat.value}</p>
-              <div className="flex items-center mt-2">
-                <span className={`text-sm ${
-                  stat.trend === 'up' ? 'text-green-500' : 'text-red-500'
-                }`}>
-                  {stat.trend === 'up' ? '+' : '-'}{stat.percentage}%
-                </span>
-                <span className="text-sm text-gray-500 ml-1">vs last month</span>
-              </div>
-            </motion.div>
-          ))}
+      {/* Summary Statistics */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
+          <h3 className="text-sm font-medium text-gray-500">Total Amount</h3>
+          <p className="text-2xl font-bold text-green-600">${stats.total.toFixed(2)}</p>
         </div>
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
+          <h3 className="text-sm font-medium text-gray-500">Received</h3>
+          <p className="text-2xl font-bold text-blue-600">${stats.received.toFixed(2)}</p>
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
+          <h3 className="text-sm font-medium text-gray-500">Pending</h3>
+          <p className="text-2xl font-bold text-yellow-600">${stats.pending.toFixed(2)}</p>
+        </div>
+      </div>
 
-        {/* Filters and Search */}
-        <div className="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-xl shadow-sm">
-          <div className="flex flex-wrap gap-2">
-            {filters.map((filter) => (
-              <motion.button
-                key={filter}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-4 py-2 rounded-lg capitalize ${
-                  selectedFilter === filter
-                    ? 'bg-green-500 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-                onClick={() => setSelectedFilter(filter)}
-              >
-                {filter}
-              </motion.button>
-            ))}
-          </div>
-          
-          <div className="relative">
+      {/* Filters */}
+      <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
             <input
               type="text"
-              placeholder="Search transactions..."
-              className="pl-10 pr-4 py-2 rounded-lg border focus:outline-none focus:border-green-500 w-64"
+              placeholder="Search by buyer, crop type, or contract reference..."
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
+          </div>
+          <div>
+            <select
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+            >
+              <option value="all">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Partial">Partial</option>
+              <option value="Paid">Paid</option>
+            </select>
           </div>
         </div>
+      </div>
 
-        {/* Transactions List */}
-        <LayoutGroup>
-          <motion.div className="space-y-4">
-            <AnimatePresence mode="popLayout">
-              {filterTransactions().map((transaction) => (
-                <motion.div
-                  layout
-                  key={transaction.id}
-                  variants={cardVariants}
-                  whileHover="hover"
-                  whileTap="tap"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="bg-white rounded-xl shadow-sm overflow-hidden"
-                >
-                  <div 
-                    className="p-6 cursor-pointer"
-                    onClick={() => setSelectedTransaction(
-                      selectedTransaction?.id === transaction.id ? null : transaction
-                    )}
+      {/* Payments List */}
+      <div className="space-y-6">
+        {filteredPayments.map(payment => (
+          <div key={payment.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+            <div className="p-6">
+              {/* Header */}
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-green-900">{payment.cropType}</h3>
+                  <p className="text-sm text-gray-600">Contract Ref: {payment.contractRef}</p>
+                  <p className="text-sm text-gray-600">Buyer: {payment.buyer}</p>
+                </div>
+                <div className="flex flex-col items-end">
+                  <span className={`px-4 py-1 rounded-full text-sm font-medium ${
+                    payment.status === 'Paid' ? 'bg-green-100 text-green-700 border-green-200' :
+                    payment.status === 'Partial' ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
+                    'bg-red-100 text-red-700 border-red-200'
+                  } border`}>
+                    {payment.status}
+                  </span>
+                  {payment.invoiceNumber && (
+                    <span className="mt-2 text-sm text-gray-600">
+                      Invoice: {payment.invoiceNumber}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Payment Details */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div>
+                  <p className="text-sm text-gray-600">Total Amount</p>
+                  <p className="font-semibold text-lg">${payment.amount.toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Received</p>
+                  <p className="font-semibold text-lg">${(payment.amount - payment.remainingAmount).toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Remaining</p>
+                  <p className="font-semibold text-lg">${payment.remainingAmount.toFixed(2)}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Due Date</p>
+                  <p className="font-semibold">{new Date(payment.dueDate).toLocaleDateString()}</p>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {!payment.invoiceGenerated && (
+                  <button
+                    onClick={() => handleGenerateInvoice(payment)}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                   >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-4">
-                        <motion.div
-                          whileHover={{ rotate: 360 }}
-                          transition={{ duration: 0.5 }}
-                          className={`p-3 rounded-full ${
-                            transaction.type === 'purchase' 
-                              ? 'bg-blue-100 text-blue-500'
-                              : 'bg-green-100 text-green-500'
-                          }`}
-                        >
-                          {transaction.type === 'purchase' ? (
-                            <ArrowDownRight className="w-6 h-6" />
-                          ) : (
-                            <ArrowUpRight className="w-6 h-6" />
-                          )}
-                        </motion.div>
-                        <div>
-                          <h3 className="font-semibold">{transaction.product}</h3>
-                          <p className="text-sm text-gray-500">{transaction.farmer}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-semibold">
-                          ${transaction.amount.toLocaleString()}
-                        </p>
-                        <p className="text-sm text-gray-500">{transaction.date}</p>
-                      </div>
-                    </div>
+                    Generate Invoice
+                  </button>
+                )}
+                <button
+                  onClick={() => handleRequestConfirmation(payment)}
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                >
+                  Send Reminder
+                </button>
+                {payment.status !== 'Paid' && (
+                  <button
+                    onClick={() => setSelectedPayment(payment.id)}
+                    className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-colors"
+                  >
+                    Record Payment
+                  </button>
+                )}
+              </div>
 
-                    <AnimatePresence>
-                      {selectedTransaction?.id === transaction.id && (
-                        <motion.div
-                          variants={detailsVariants}
-                          initial="hidden"
-                          animate="visible"
-                          exit="hidden"
-                          className="mt-4 pt-4 border-t"
-                        >
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div>
-                              <p className="text-sm text-gray-500">Status</p>
-                              <p className={`text-sm font-medium ${
-                                transaction.status === 'completed'
-                                  ? 'text-green-500'
-                                  : 'text-yellow-500'
-                              }`}>
-                                {transaction.status.charAt(0).toUpperCase() + 
-                                 transaction.status.slice(1)}
-                              </p>
-                            </div>
-                            <div>
-                              <p className="text-sm text-gray-500">Quantity</p>
-                              <p className="text-sm font-medium">{transaction.quantity}</p>
-                            </div>
-                            <div>
-                              <p className="text-sm text-gray-500">Payment Method</p>
-                              <p className="text-sm font-medium">{transaction.paymentMethod}</p>
-                            </div>
-                            <div>
-                              <p className="text-sm text-gray-500">Invoice Number</p>
-                              <p className="text-sm font-medium">{transaction.invoiceNumber}</p>
-                            </div>
-                          </div>
-
-                          <div className="flex justify-end mt-4 space-x-3">
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="px-4 py-2 text-sm text-white bg-green-500 rounded-lg"
-                            >
-                              Download Invoice
-                            </motion.button>
-                            <motion.button
-                              whileHover={{ scale: 1.05 }}
-                              whileTap={{ scale: 0.95 }}
-                              className="px-4 py-2 text-sm border border-gray-200 rounded-lg"
-                            >
-                              View Details
-                            </motion.button>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+              {/* Payment Form */}
+              {selectedPayment === payment.id && (
+                <div className="mb-4 p-4 bg-gray-50 rounded-lg">
+                  <h4 className="text-sm font-medium text-gray-700 mb-2">Record New Payment</h4>
+                  <div className="flex gap-2">
+                    <input
+                      type="number"
+                      placeholder="Enter amount"
+                      className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                      step="0.01"
+                      max={payment.remainingAmount}
+                      onChange={(e) => {
+                        if (e.target.value <= payment.remainingAmount) {
+                          setNote(e.target.value);
+                        }
+                      }}
+                    />
+                    <button
+                      onClick={() => handleAddPayment(payment, note)}
+                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                    >
+                      Record
+                    </button>
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </LayoutGroup>
+                </div>
+              )}
 
-        {/* Empty State */}
-        {filterTransactions().length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-12 bg-white rounded-xl"
-          >
-            <p className="text-gray-500">No transactions found</p>
-          </motion.div>
-        )}
-      </motion.div>
+              {/* Payment History */}
+              <div className="mt-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">Payment History</h4>
+                <div className="space-y-2">
+                  {payment.paymentHistory.map((history, index) => (
+                    <div key={index} className="flex justify-between text-sm bg-gray-50 p-2 rounded">
+                      <span>{history.type}</span>
+                      <span className="text-green-600">${history.amount.toFixed(2)}</span>
+                      <span className="text-gray-500">{new Date(history.date).toLocaleDateString()}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Notes Section */}
+              <div className="mt-4 border-t pt-4">
+                <h4 className="text-sm font-medium text-gray-700 mb-2">Notes</h4>
+                {payment.notes && (
+                  <p className="text-sm text-gray-600 mb-2">{payment.notes}</p>
+                )}
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Add a note..."
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
+                  />
+                  <button
+                    onClick={() => handleAddNote(payment.id)}
+                    className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700"
+                  >
+                    Add Note
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default TransactionDashboard;
+export default PaymentManagement;
