@@ -53,7 +53,7 @@ const CropMarketplace = () => {
       location: 'Tropical Heights',
       farmer: 'Sunshine Fruits',
       rating: 4.5,
-      image: 'https://healthjade.com/wp-content/uploads/2017/09/banana.jpg',
+      image: 'https://media.istockphoto.com/id/1494763483/photo/banana-concept.jpg?s=2048x2048&w=is&k=20&c=oz3Xd4SKjKrMrc2JX0pqworegOshV9YMl2GUbpVI338=',
       delivery: '3-4 days',
       description: 'High-quality bananas from sustainable farming practices.',
       certification: 'Global GAP'

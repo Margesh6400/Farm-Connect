@@ -30,7 +30,7 @@ const ActivePurchases = () => {
           unit: 'ton',
           price: 180,
           farmer: 'Green Farms Co.',
-          image: '/api/placeholder/400/300'
+          image: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg'
         }
       ],
       shipmentUpdates: [
@@ -58,7 +58,7 @@ const ActivePurchases = () => {
           unit: 'ton',
           price: 90,
           farmer: 'Sunshine Fruits',
-          image: '/api/placeholder/400/300'
+          image: 'https://media.istockphoto.com/id/1494763483/photo/banana-concept.jpg?s=2048x2048&w=is&k=20&c=oz3Xd4SKjKrMrc2JX0pqworegOshV9YMl2GUbpVI338='
         }
       ],
       shipmentUpdates: [
@@ -86,7 +86,7 @@ const ActivePurchases = () => {
           unit: 'ton',
           price: 300,
           farmer: 'Golden Grains Ltd',
-          image: '/api/placeholder/400/300'
+          image: 'https://www.gourmetfoodworld.com/images/Product/medium/basmati-rice-1S-1052.jpg'
         }
       ],
       shipmentUpdates: [
@@ -114,7 +114,7 @@ const ActivePurchases = () => {
           unit: 'ton',
           price: 150,
           farmer: 'Healthy Harvest',
-          image: '/api/placeholder/400/300'
+          image: 'https://bachelorrecipe.com/wp-content/uploads/2017/11/Vegan-Carrot-and-Potato-Soup5.jpg'
         }
       ],
       shipmentUpdates: [
