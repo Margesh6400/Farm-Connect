@@ -1,55 +1,34 @@
-export default function About() {
-    return (
-      <div className="bg-white py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl lg:text-center">
-            <h2 className="text-base font-semibold leading-7 text-primary-600">About Us</h2>
-            <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              Empowering Agricultural Communities
-            </p>
-            <p className="mt-6 text-lg leading-8 text-gray-600">
-              Our mission is to create a sustainable and profitable farming ecosystem by connecting farmers directly with buyers,
-              ensuring fair prices and stable income through secure contract farming arrangements.
-            </p>
-          </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                  Our Mission
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                  <p className="flex-auto">
-                    To revolutionize agricultural marketing by providing a transparent and efficient platform
-                    that benefits both farmers and buyers.
-                  </p>
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                  Our Vision
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                  <p className="flex-auto">
-                    A world where every farmer has access to fair market opportunities and every buyer
-                    can source quality produce directly from farms.
-                  </p>
-                </dd>
-              </div>
-              <div className="flex flex-col">
-                <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900">
-                  Our Values
-                </dt>
-                <dd className="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-600">
-                  <p className="flex-auto">
-                    Transparency, fairness, sustainability, and community empowerment are at the core
-                    of everything we do.
-                  </p>
-                </dd>
-              </div>
-            </dl>
-          </div>
+import React, { useEffect } from 'react';
+
+const AboutPage = () => {
+  const redirectToHomeMission = () => {
+    // Navigate to homepage with mission section hash
+    window.location.href = '/#mission';
+  };
+
+  // Automatically redirect when component mounts
+  useEffect(() => {
+    redirectToHomeMission();
+  }, []);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-green-50 to-white">
+      <div className="text-center">
+        <div className="mb-8">
+          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <h1 className="text-2xl font-semibold text-gray-800">Redirecting to About Our Mission...</h1>
+          <p className="text-gray-600 mt-2">Please wait a moment</p>
         </div>
+        
+        <button
+          onClick={redirectToHomeMission}
+          className="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+        >
+          Click here if not redirected
+        </button>
       </div>
-    )
-  }
+    </div>
+  );
+};
+
+export default AboutPage;
