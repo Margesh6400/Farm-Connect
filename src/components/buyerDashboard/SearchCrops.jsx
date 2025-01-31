@@ -38,7 +38,7 @@ const CropMarketplace = () => {
       location: 'California Valley',
       farmer: 'Green Farms Co.',
       rating: 4.8,
-      image: '/api/placeholder/400/300',
+      image: 'https://bittmanproject.com/wp-content/uploads/engin-akyurt-HrCatSbULFY-unsplash-1536x1152.jpg',
       delivery: '2-3 days',
       description: 'Fresh, organically grown tomatoes perfect for commercial use.',
       certification: 'USDA Organic'
@@ -53,7 +53,7 @@ const CropMarketplace = () => {
       location: 'Tropical Heights',
       farmer: 'Sunshine Fruits',
       rating: 4.5,
-      image: '/api/placeholder/400/300',
+      image: 'https://www.yorktest.com/wp-content/uploads/2016/01/Bananas.jpg',
       delivery: '3-4 days',
       description: 'High-quality bananas from sustainable farming practices.',
       certification: 'Global GAP'
@@ -68,7 +68,7 @@ const CropMarketplace = () => {
       location: 'Punjab Fields',
       farmer: 'Golden Grains Ltd',
       rating: 4.9,
-      image: '/api/placeholder/400/300',
+      image: 'https://www.isayorganic.com/cdn/shop/files/iso__0005_WhiteRice1_720x.jpg?v=1736270108',
       delivery: '5-7 days',
       description: 'Premium quality basmati rice with excellent aroma.',
       certification: 'ISO 22000'
