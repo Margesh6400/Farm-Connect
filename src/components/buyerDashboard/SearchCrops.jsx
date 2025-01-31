@@ -38,7 +38,7 @@ const CropMarketplace = () => {
       location: 'California Valley',
       farmer: 'Green Farms Co.',
       rating: 4.8,
-      image: '/api/placeholder/400/300',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Tomato_je.jpg',
       delivery: '2-3 days',
       description: 'Fresh, organically grown tomatoes perfect for commercial use.',
       certification: 'USDA Organic'
@@ -53,7 +53,7 @@ const CropMarketplace = () => {
       location: 'Tropical Heights',
       farmer: 'Sunshine Fruits',
       rating: 4.5,
-      image: '/api/placeholder/400/300',
+      image: 'https://healthjade.com/wp-content/uploads/2017/09/banana.jpg',
       delivery: '3-4 days',
       description: 'High-quality bananas from sustainable farming practices.',
       certification: 'Global GAP'
@@ -83,7 +83,7 @@ const CropMarketplace = () => {
       location: 'Oregon Farms',
       farmer: 'Healthy Harvest',
       rating: 4.7,
-      image: '/api/placeholder/400/300',
+      image: 'https://bachelorrecipe.com/wp-content/uploads/2017/11/Vegan-Carrot-and-Potato-Soup5.jpg',
       delivery: '2-4 days',
       description: 'Crunchy and sweet organic carrots.',
       certification: 'USDA Organic'
@@ -98,7 +98,7 @@ const CropMarketplace = () => {
       location: 'Mango Valley',
       farmer: 'Tropical Fruits Co.',
       rating: 4.6,
-      image: '/api/placeholder/400/300',
+      image: 'https://www.todaystraveller.net/wp-content/uploads/2021/05/mango-1.png',
       delivery: '3-5 days',
       description: 'Juicy and sweet mangoes from tropical regions.',
       certification: 'Global GAP'
@@ -143,7 +143,7 @@ const CropMarketplace = () => {
       location: 'Green Valley',
       farmer: 'Healthy Greens',
       rating: 4.6,
-      image: '/api/placeholder/400/300',
+      image: 'https://www.seed-bank.ca/wp-content/uploads/how-to-grow-spinach-2048x2048.jpg',
       delivery: '2-3 days',
       description: 'Fresh organic spinach rich in nutrients.',
       certification: 'USDA Organic'
@@ -158,7 +158,7 @@ const CropMarketplace = () => {
       location: 'Sweet Valley',
       farmer: 'Root Farms',
       rating: 4.7,
-      image: '/api/placeholder/400/300',
+      image: 'https://ag.umass.edu/sites/ag.umass.edu/files/fact-sheets/images/photo_sep_23_2_51_52_pm.jpg',
       delivery: '3-4 days',
       description: 'Delicious and nutritious sweet potatoes.',
       certification: 'Non-GMO'

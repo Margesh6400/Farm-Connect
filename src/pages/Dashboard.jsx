@@ -232,26 +232,6 @@ const Dashboard = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <div>
-              <motion.h1 
-                className="text-4xl font-bold text-green-900"
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                Welcome, {user.name}
-              </motion.h1>
-              <motion.p 
-                className="text-green-600 mt-2"
-                initial={{ x: -20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 0.6 }}
-              >
-                {role === 'farmer' 
-                  ? 'Manage your agricultural business efficiently'
-                  : 'Find and purchase agricultural products'}
-              </motion.p>
-            </div>
             <motion.div 
               className="bg-green-50 p-4 rounded-2xl"
               initial={{ scale: 0.9, opacity: 0 }}
