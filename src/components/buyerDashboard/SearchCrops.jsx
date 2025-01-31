@@ -388,7 +388,7 @@ const CropMarketplace = () => {
             className="bg-white p-4 rounded-lg mb-8"
             variants={itemVariants}
           >
-            <h3 className="text-sm font-medium mb-2">Price Range ($ per ton)</h3>
+            <h3 className="text-sm font-medium mb-2">Price Range (₹ per ton)</h3>
             <div className="flex items-center space-x-4">
               <input
                 type="range"
@@ -407,7 +407,7 @@ const CropMarketplace = () => {
                 className="flex-1"
               />
               <span className="text-sm text-gray-600">
-                ${priceRange[0]} - ${priceRange[1]}
+                ₹{priceRange[0]} - ₹{priceRange[1]}
               </span>
             </div>
           </motion.div>
@@ -449,7 +449,7 @@ const CropMarketplace = () => {
                   <div className="space-y-3 mb-6">
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Price per {crop.unit}</span>
-                      <span className="text-xl font-bold text-green-600">${crop.price}</span>
+                      <span className="text-xl font-bold text-green-600">₹{crop.price}</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-gray-600">Available</span>
@@ -524,7 +524,7 @@ const CropMarketplace = () => {
                       >
                         <div>
                           <h3 className="font-medium">{item.name}</h3>
-                          <p className="text-sm text-gray-500">${item.price} per {item.unit}</p>
+                          <p className="text-sm text-gray-500">₹{item.price} per {item.unit}</p>
                         </div>
                         <div className="flex items-center space-x-3">
                           <div className="flex items-center space-x-2">
@@ -559,7 +559,7 @@ const CropMarketplace = () => {
                   <div className="border-t pt-4 mt-4">
                     <div className="flex justify-between mb-4">
                       <span className="font-medium">Total</span>
-                      <span className="font-bold">${calculateTotal().toFixed(2)}</span>
+                      <span className="font-bold">₹{calculateTotal().toFixed(2)}</span>
                     </div>
                     <motion.button
                       whileHover={{ scale: 1.02 }}
@@ -627,7 +627,7 @@ const CropMarketplace = () => {
                   <div className="space-y-3">
                     <div>
                       <h3 className="text-sm font-medium text-gray-500">Price</h3>
-                      <p className="text-xl font-bold text-green-600">${selectedCrop.price} per {selectedCrop.unit}</p>
+                      <p className="text-xl font-bold text-green-600">₹{selectedCrop.price} per {selectedCrop.unit}</p>
                     </div>
                     <div>
                       <h3 className="text-sm font-medium text-gray-500">Available Quantity</h3>

@@ -118,15 +118,15 @@ const PaymentManagement = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
           <h3 className="text-sm font-medium text-gray-500">Total Amount</h3>
-          <p className="text-2xl font-bold text-green-600">${stats.total.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-green-600">₹{stats.total.toFixed(2)}</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
           <h3 className="text-sm font-medium text-gray-500">Received</h3>
-          <p className="text-2xl font-bold text-blue-600">${stats.received.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-blue-600">₹{stats.received.toFixed(2)}</p>
         </div>
         <div className="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
           <h3 className="text-sm font-medium text-gray-500">Pending</h3>
-          <p className="text-2xl font-bold text-yellow-600">${stats.pending.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-yellow-600">₹{stats.pending.toFixed(2)}</p>
         </div>
       </div>
       {/* Filters */}
@@ -186,15 +186,15 @@ const PaymentManagement = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                 <div>
                   <p className="text-sm text-gray-600">Total Amount</p>
-                  <p className="font-semibold text-lg">${payment.amount.toFixed(2)}</p>
+                  <p className="font-semibold text-lg">₹{payment.amount.toFixed(2)}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Received</p>
-                  <p className="font-semibold text-lg">${(payment.amount - payment.remainingAmount).toFixed(2)}</p>
+                  <p className="font-semibold text-lg">₹{(payment.amount - payment.remainingAmount).toFixed(2)}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Remaining</p>
-                  <p className="font-semibold text-lg">${payment.remainingAmount.toFixed(2)}</p>
+                  <p className="font-semibold text-lg">₹{payment.remainingAmount.toFixed(2)}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-600">Due Date</p>
@@ -259,7 +259,7 @@ const PaymentManagement = () => {
                   {payment.paymentHistory.map((history, index) => (
                     <div key={index} className="flex justify-between text-sm bg-gray-50 p-2 rounded">
                       <span>{history.type}</span>
-                      <span className="text-green-600">${history.amount.toFixed(2)}</span>
+                      <span className="text-green-600">₹{history.amount.toFixed(2)}</span>
                       <span className="text-gray-500">{new Date(history.date).toLocaleDateString()}</span>
                     </div>
                   ))}

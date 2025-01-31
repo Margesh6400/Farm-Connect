@@ -6,6 +6,10 @@ import TrackContracts from '../components/contract/TrackContracts';
 import Negotiation from '../components/contract/Negotiation';
 import PaymentManagement from '../components/contract/PaymentManagement';
 import ContractCompletion from '../components/contract/ContractCompletion';
+import ReviewContracts from '../components/contract/ReviewContracts';
+import ActiveContracts from '../components/contract/ActiveContracts';
+import Payments from '../components/contract/Payments';
+import ContractHistory from '../components/contract/ContractHistory';
 
 // Background decoration component remains the same
 const BackgroundDecoration = () => (
@@ -149,11 +153,20 @@ const Contract = () => {
           return null;
       }
     } else {
-      return (
-        <div className="text-center p-8 text-gray-600">
-          {activeSection} component for buyers would go here
-        </div>
-      );
+      switch (activeSection) {
+        case 'reviewContracts':
+          return <ReviewContracts />;
+        case 'activeContracts':
+          return <ActiveContracts />;
+        case 'negotiation':
+          return <Negotiation />;
+        case 'payments':
+          return <Payments />;
+        case 'contractHistory':
+          return <ContractHistory />;
+        default:
+          return null;
+      }
     }
   };
 

@@ -5,14 +5,14 @@ const Payments = () => {
     {
       id: 'PAY-2024-001',
       crop: 'Wheat',
-      amount: '$100,000',
+      amount: '₹100,000',
       status: 'Pending',
       farmer: 'Green Farms Co.',
     },
     {
       id: 'PAY-2024-002',
       crop: 'Rice',
-      amount: '$90,000',
+      amount: '₹90,000',
       status: 'Completed',
       farmer: 'Golden Grains Ltd',
     },
