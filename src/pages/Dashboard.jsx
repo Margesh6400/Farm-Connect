@@ -232,7 +232,7 @@ const Dashboard = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            <div>
+            {/* <div>
               <motion.h1 
                 className="text-4xl font-bold text-green-900"
                 initial={{ x: -20, opacity: 0 }}
@@ -251,7 +251,7 @@ const Dashboard = () => {
                   ? 'Manage your agricultural business efficiently'
                   : 'Find and purchase agricultural products'}
               </motion.p>
-            </div>
+            </div> */}
             <motion.div 
               className="bg-green-50 p-4 rounded-2xl"
               initial={{ scale: 0.9, opacity: 0 }}

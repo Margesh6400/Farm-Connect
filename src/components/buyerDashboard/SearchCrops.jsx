@@ -198,44 +198,44 @@ const CropMarketplace = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Navigation Bar */}
-      <motion.nav 
-        className="bg-white shadow-sm py-4 px-8 fixed w-full z-50"
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ type: 'spring', stiffness: 100 }}
-      >
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-green-600">CropMarket</h1>
-          
-          <div className="flex items-center space-x-6">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search crops..."
-                className="pl-10 pr-4 py-2 rounded-full border focus:outline-none focus:border-green-500 w-64"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
-            </div>
+              {/* Navigation Bar */}
+              <motion.nav 
+          className="bg-white shadow-sm py-4 px-8 sticky top-0 z-50"
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          transition={{ type: 'spring', stiffness: 100 }}
+        >
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-green-600">CropMarket</h1>
             
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="relative"
-              onClick={() => setShowCart(true)}
-            >
-              <ShoppingCart className="w-6 h-6 text-gray-600" />
-              {cart.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
-                  {cart.length}
-                </span>
-              )}
-            </motion.button>
+            <div className="flex items-center space-x-6">
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Search crops..."
+                  className="pl-10 pr-4 py-2 rounded-full border focus:outline-none focus:border-green-500 w-64"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <Search className="w-5 h-5 text-gray-400 absolute left-3 top-2.5" />
+              </div>
+              
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative"
+                onClick={() => setShowCart(true)}
+              >
+                <ShoppingCart className="w-6 h-6 text-gray-600" />
+                {cart.length > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                    {cart.length}
+                  </span>
+                )}
+              </motion.button>
+            </div>
           </div>
-        </div>
-      </motion.nav>
+        </motion.nav>
 
       <div className="pt-24 px-8">
         <div className="max-w-7xl mx-auto">
