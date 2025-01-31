@@ -68,7 +68,7 @@ const CropMarketplace = () => {
       location: 'Punjab Fields',
       farmer: 'Golden Grains Ltd',
       rating: 4.9,
-      image: '/api/placeholder/400/300',
+      image: 'https://www.gourmetfoodworld.com/images/Product/medium/basmati-rice-1S-1052.jpg',
       delivery: '5-7 days',
       description: 'Premium quality basmati rice with excellent aroma.',
       certification: 'ISO 22000'
@@ -113,7 +113,7 @@ const CropMarketplace = () => {
       location: 'Nebraska Fields',
       farmer: 'Cornucopia Farms',
       rating: 4.4,
-      image: '/api/placeholder/400/300',
+      image: 'https://s30386.pcdn.co/wp-content/uploads/2019/08/FreshCorn_HNL1309_ts135846041.jpg',
       delivery: '3-5 days',
       description: 'High-quality golden corn perfect for various uses.',
       certification: 'Non-GMO'
@@ -128,7 +128,7 @@ const CropMarketplace = () => {
       location: 'Berry Fields',
       farmer: 'Berry Best Farms',
       rating: 4.9,
-      image: '/api/placeholder/400/300',
+      image: 'https://static01.nyt.com/images/2015/06/07/travel/07HEADS3/07HEADS3-jumbo.jpg?quality=75&auto=webp',
       delivery: '1-2 days',
       description: 'Sweet and juicy strawberries freshly picked.',
       certification: 'Organic'
@@ -173,7 +173,7 @@ const CropMarketplace = () => {
       location: 'Citrus Grove',
       farmer: 'Orange Delight',
       rating: 4.8,
-      image: '/api/placeholder/400/300',
+      image: 'https://www.mashed.com/img/gallery/oranges-arent-always-orange-despite-their-name/intro-1676392533.webp',
       delivery: '2-3 days',
       description: 'Fresh and juicy oranges perfect for juicing.',
       certification: 'Global GAP'
@@ -304,8 +304,9 @@ const CropMarketplace = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navigation Bar */}
+      {/* Fixed Navigation Bar */}
       <motion.nav 
-        className="bg-white shadow-sm py-4 px-8 fixed w-full z-50"
+        className="bg-white shadow-sm py-4 px-8 w-full z-50 flex-shrink-0"
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ type: 'spring', stiffness: 100 }}
